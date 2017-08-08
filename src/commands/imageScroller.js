@@ -1,0 +1,68 @@
+import discord from "../server/discord";
+import logger from "../server/logger";
+import imgCtrl from "../controllers/imageScroller";
+import request from "request";
+
+
+discord.onMessageEverywhere(message => {
+    if (message.content.startsWith("!help")) {
+        create(message);
+    } else if (message.content === "!all") {
+        listCategory();
+    } else if (message.content.startsWith("!")) {
+        getImage(message);
+    }
+});
+
+
+function getImage(message) {
+    const category = message.content.replace("!", "").toLowerCase();
+    imgCtrl.getCategory(category)
+        .then(numCategory => {
+            if (!numCategory) {
+                logger.info("No matching category :", category);
+                message.channel.send("No matching category, sorry :(");
+            } else {
+                makeRequest(numCategory.id, function (imageURL) {
+                    logger.info("Search done : ", numCategory.id, category);
+                    if (imageURL === "none") {
+                        message.channel.send("This category exists but I had a problem, try again please :/");
+                    } else {
+                        message.channel.send(imageURL);
+                    }
+                });
+            }
+        })
+        .catch(err => logger.error(err));
+}
+
+function makeRequest(numCategory, callback) {
+    const HEADER = {
+        "Content-Type": "application/json"
+    };
+    const TARGET_URL = "https://scrolller.com/api/media";
+    const METHOD = "POST";
+    const DATA = [
+        [numCategory, Math.round(Math.random() * (10000 - 1) + 1), Math.round(Math.random() * (300 - 1) + 1), 1]
+    ];
+    request({
+        headers: HEADER,
+        url: TARGET_URL,
+        method: METHOD,
+        json: DATA
+    }, function (err, res, body) {
+        if (err || res.statusCode != 200 || body[0][3].length < 1) {
+            logger.error("Error while scraping scrolller.com ", JSON.stringify(body));
+            logger.error("DATA ERROR", DATA);
+            callback("none");
+        } else {
+            let URL;
+            if (body[0][3][0][3][0][1].length > 1) {
+                URL = body[0][3][0][3][0][1][0][0];
+            } else {
+                URL = "https://scrolller.com/media/" + body[0][3][0][3][0][1][0][0][1];
+            }
+            callback(URL);
+        }
+    });
+}

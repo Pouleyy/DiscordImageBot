@@ -1,0 +1,32 @@
+{
+  "name": "ImageBaleine",
+  "version": "1.0.0",
+  "description": "Discord Image Bot for \"La Baleine\"",
+  "main": "dist/server.js",
+  "repository": "https://github.com/LaBaleineFr/DiscordBotSample.git",
+  "author": "SushiFu <SushiFu@gmx.fr>",
+  "license": "MIT",
+  "scripts": {
+    "build": "gulp build",
+    "lint": "gulp lint",
+    "start": "yarn build && docker-compose run --rm --service-ports bot",
+    "reset": "docker-compose down && docker volume prune"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.4.0",
+    "del": "^2.2.2",
+    "eslint": "^3.19.0",
+    "gulp": "gulpjs/gulp#4.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-eslint": "^3.0.1",
+    "gulp-sourcemaps": "^2.6.0",
+    "nodemon": "^1.11.0",
+    "pump": "^1.0.2"
+  },
+  "dependencies": {
+    "bunyan": "^1.8.10",
+    "discord.js": "^11.0.0",
+    "mongoose": "^4.9.6"
+  }
+}

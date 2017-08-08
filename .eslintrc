@@ -1,0 +1,27 @@
+{
+    "rules": {
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "no-tabs": 1,
+        "semi": 2,
+        "no-console": 1
+    },
+    "env": {
+        "node": true,
+        "mocha": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "module"
+    },
+    "extends": [
+        "eslint:recommended"
+    ],
+    "globals": {
+        "Promise": true,
+        "Set": true,
+        "Map": true
+    }
+}

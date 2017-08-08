@@ -1,0 +1,19 @@
+version: "3"
+services: 
+    bot:
+        restart: always
+        image: $HUB_URL:$TAG
+        networks: 
+            - backend
+            - db
+        environment:
+            - NODE_ENV=production
+            - LOG_LEVEL=info
+            - MONGO_URL=mongodb://mongo-dev:27017/baleinebot
+            - DISCORD_TOKEN=${DISCORD_TOKEN}
+
+networks:
+    backend:
+        external: true
+    db:
+        external: true

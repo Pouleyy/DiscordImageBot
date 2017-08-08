@@ -1,0 +1,20 @@
+{
+    "version": "0.1.0",
+    "isShellCommand": true,
+    "command": "bash",
+    "args": [
+        "-c"
+    ],
+    "showOutput": "always",
+    "suppressTaskName": true,
+    "tasks": [
+        {
+            "taskName": "build",
+            "args": [
+                "yarn build"
+            ],
+            "isBuildCommand": true,
+            "isBackground": false
+        }
+    ]
+}
