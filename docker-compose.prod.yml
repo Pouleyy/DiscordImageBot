@@ -11,6 +11,7 @@ services:
             - LOG_LEVEL=info
             - MONGO_URL=mongodb://mongo-dev:27017/baleinebot
             - DISCORD_TOKEN=${DISCORD_TOKEN}
+            - DISCORD_CHAN_ID=${DISCORD_CHAN_ID}
 
 networks:
     backend:

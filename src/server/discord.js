@@ -24,6 +24,18 @@ function onCmdChannelMessage(callback) {
 }
 
 /**
+ * Register message listener on DISCORD_CHAN_ID
+ * @param {Function} callback 
+ */
+function onDefaultChannelMessage(callback) {
+    client.on("message", message => {
+        if (message.channel.id === config.DISCORD_CHAN_ID) {
+            callback(message);
+        }
+    });
+}
+
+/**
  * Register message listener on every channels
  * @param {Function} callback 
  */
@@ -61,4 +73,4 @@ function sendOn(channel, message) {
     return channel.send(message);
 }
 
-export default { client, clientLogin, onCmdChannelMessage, onMessageEverywhere, sendOnCmdChannel, sendOnDefaultChannel, sendOn };
+export default { client, clientLogin, onCmdChannelMessage, onDefaultChannelMessage, onMessageEverywhere, sendOnCmdChannel, sendOnDefaultChannel, sendOn };

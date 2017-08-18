@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:7-wheezy
 MAINTAINER SushiFu <SushiFu@gmx.fr>
 
 WORKDIR /app

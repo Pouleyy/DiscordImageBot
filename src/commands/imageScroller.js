@@ -4,7 +4,7 @@ import imgCtrl from "../controllers/imageScroller";
 import request from "request";
 
 
-discord.onMessageEverywhere(message => {
+discord.onDefaultChannelMessage(message => {
     if (message.content.startsWith("!help")) {
         create(message);
     } else if (message.content === "!all") {
