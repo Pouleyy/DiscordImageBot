@@ -30,6 +30,7 @@ export const CategorySchema = new mongoose.Schema({
 /**
  * Statics
  */
+
 CategorySchema.statics = {
     /**
      * Save Category
@@ -68,6 +69,12 @@ CategorySchema.statics = {
      */
     all() {
         return this.find({});
+    },
+
+    search(category) {
+        return this.find({
+            name: { $regex: category, $options: 'i' }
+        }).select({ "name": 1, "_id": 0 });
     }
 };
 

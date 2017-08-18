@@ -5,8 +5,8 @@ import request from "request";
 
 
 discord.onDefaultChannelMessage(message => {
-    if (message.content.startsWith("!help")) {
-        create(message);
+    if (message.content.startsWith("!search")) {
+        search(message);
     } else if (message.content === "!all") {
         listCategory();
     } else if (message.content.startsWith("!")) {
@@ -14,6 +14,24 @@ discord.onDefaultChannelMessage(message => {
     }
 });
 
+function search(message) {
+    let category = message.content.replace("!search ", "").toLowerCase();
+    imgCtrl.searchCategory(category)
+        .then(categories => {
+            if (categories.length === 0) {
+                logger.info("No matching category :", category);
+                message.channel.send("No matching category, sorry :(");
+            } else {
+                logger.info("SEARCHED CATEGORY", category);
+                let msg;
+                for (var i = 0; i < categories.length; i++) {
+                    msg += categories[i].name + "\n";
+                }
+                message.channel.send(msg);
+            }
+        })
+        .catch(err => logger.error(err));
+}
 
 function getImage(message) {
     const category = message.content.replace("!", "").toLowerCase();
@@ -24,7 +42,7 @@ function getImage(message) {
                 message.channel.send("No matching category, sorry :(");
             } else {
                 makeRequest(numCategory.id, function (imageURL) {
-                    logger.info("Search done : ", numCategory.id, category);
+                    logger.info("Search done :", numCategory.id, category);
                     if (imageURL === "none") {
                         message.channel.send("This category exists but I had a problem, try again please :/");
                     } else {
