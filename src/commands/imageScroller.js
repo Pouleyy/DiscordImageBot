@@ -7,8 +7,6 @@ import request from "request";
 discord.onDefaultChannelMessage(message => {
     if (message.content.startsWith("!search")) {
         search(message);
-    } else if (message.content === "!all") {
-        listCategory();
     } else if (message.content.startsWith("!")) {
         getImage(message);
     }
@@ -24,7 +22,7 @@ function search(message) {
             } else {
                 logger.info("SEARCHED CATEGORY", category);
                 let msg;
-                for (var i = 0; i < categories.length; i++) {
+                for (var i = 1; i < categories.length; i++) {
                     msg += categories[i].name + "\n";
                 }
                 message.channel.send(msg);
