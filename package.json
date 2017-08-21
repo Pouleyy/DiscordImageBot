@@ -27,6 +27,7 @@
   "dependencies": {
     "bunyan": "^1.8.10",
     "discord.js": "^11.0.0",
-    "mongoose": "^4.9.6"
+    "mongoose": "^4.9.6",
+    "request": "^2.81.0"
   }
 }
