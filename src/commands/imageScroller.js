@@ -22,9 +22,11 @@ function search(message) {
             } else {
                 logger.info("SEARCHED CATEGORY", category);
                 let msg;
-                for (var i = 1; i < categories.length; i++) {
-                    msg += categories[i].name + "\n";
+                for (var i = 0; i < categories.length; i++) {
+                    msg += "!" + categories[i].name + "\n";
                 }
+                msg = msg.substring(9, msg.length);
+                msg = "Search result :\n" + msg;
                 message.channel.send(msg);
             }
         })
