@@ -73,7 +73,7 @@ CategorySchema.statics = {
 
     search(category) {
         return this.find({
-            name: { $regex: category, $options: 'i' }
+            name: { $regex: category, $options: "i" }
         }).select({ "name": 1, "_id": 0 });
     }
 };
