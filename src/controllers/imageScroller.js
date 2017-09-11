@@ -11,19 +11,20 @@ function retrieveAllCategory() {
     };
     const TARGET_URL = "https://scrolller.com/api/media";
     const TIME_BETWEEN_REQUEST = 100;
-    const NUMBER_CATEGORY = 3185;
+    const NUMBER_CATEGORY = 42000;
+    const START_CATEGORY = 907;
     Category.remove()
         .then(dbReturn => {
             logger.info("Purge done", dbReturn);
-            var i = 907;
+            var categoryToGet = START_CATEGORY;
             var finish = setInterval(function () {
-                if (i > NUMBER_CATEGORY) {
+                if (beginNumber > NUMBER_CATEGORY) {
                     clearInterval(finish);
                 }
                 var bodyCat = [
-                    [i, 1, 1, 1]
+                    [categoryToGet, 1, 1, 1]
                 ];
-                i++;
+                categoryToGet++;
                 request({
                     headers: HEADER,
                     url: TARGET_URL,
