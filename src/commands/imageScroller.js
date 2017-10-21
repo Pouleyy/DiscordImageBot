@@ -35,16 +35,25 @@ function search(message) {
 
 function getImage(message) {
     const category = message.content.replace("!", "").toLowerCase();
+    console.log("test");
     imgCtrl.getCategory(category)
-        .then(numCategory => {
-            if (!numCategory) {
+        .then(categorySearched => {
+            if (!categorySearched) {
                 logger.info("No matching category :", category);
                 message.channel.send("No matching category, sorry :(");
             } else {
-                makeRequest(numCategory.id, function (imageURL) {
-                    logger.info("Search done :", numCategory.id, category);
-                    if (imageURL === "none") {
-                        message.channel.send("This category exists but I had a problem, try again please :/");
+                makeRequest(category, function (imageURL) {
+                    logger.info("Search done :", categorySearched.id, category);
+                    if (imageURL == null) {
+                        message.channel.send("Oops, something went wrong :/");
+                    } else {
+                        message.channel.send(imageURL[0]);
+                    }
+                });
+            }
+        })
+        .catch(err => logger.error(err));
+}
                     } else {
                         message.channel.send(imageURL);
                     }
@@ -54,33 +63,22 @@ function getImage(message) {
         .catch(err => logger.error(err));
 }
 
-function makeRequest(numCategory, callback) {
+function makeRequest(category, callback) {
     const HEADER = {
         "Content-Type": "application/json"
     };
-    const TARGET_URL = "https://scrolller.com/api/media";
-    const METHOD = "POST";
-    const DATA = [
-        [numCategory, Math.round(Math.random() * (10000 - 1) + 1), Math.round(Math.random() * (300 - 1) + 1), 1]
-    ];
+    const TARGET_URL = "https://scrolller.com/api/random/" + category;
+    const METHOD = "GET";
     request({
         headers: HEADER,
         url: TARGET_URL,
         method: METHOD,
-        json: DATA
     }, function (err, res, body) {
-        if (err || res.statusCode != 200 || body[0][3].length < 1) {
+        if (err || res.statusCode != 200 || body.length < 1) {
             logger.error("Error while scraping scrolller.com ", JSON.stringify(body));
-            logger.error("DATA ERROR", DATA);
-            callback("none");
+            callback(null);
         } else {
-            let URL;
-            if (body[0][3][0][3][0][1].length > 1) {
-                URL = body[0][3][0][3][0][1][0][0];
-            } else {
-                URL = "https://scrolller.com/media/" + body[0][3][0][3][0][1][0][0][1];
-            }
-            callback(URL);
+            callback(JSON.parse(body));
         }
     });
 }
