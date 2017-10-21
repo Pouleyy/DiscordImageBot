@@ -1,6 +1,6 @@
 {
   "name": "ImageBaleine",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Discord Image Bot for \"La Baleine\"",
   "main": "dist/server.js",
   "repository": "https://github.com/LaBaleineFr/DiscordBotSample.git",
