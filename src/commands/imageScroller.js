@@ -8,7 +8,11 @@ discord.onDefaultChannelMessage(message => {
     if (message.content.startsWith("!search")) {
         search(message);
     } else if (message.content.startsWith("!")) {
-        getImage(message);
+        if (message.content.includes(" bomb")) {
+            getImageBomb(message);
+        } else {
+            getImage(message);
+        }
     }
 });
 
@@ -54,8 +58,29 @@ function getImage(message) {
         })
         .catch(err => logger.error(err));
 }
+
+function getImageBomb(message) {
+    console.log("HEY MAIS C'EST UNE BOMBE");
+    const splitMessage = message.content.toLowerCase().split(" ");
+    const category = splitMessage[0].replace("!", "");
+    const bombNumber = splitMessage[2] && splitMessage[2] <= 5 ? splitMessage[2] : 5; //Discord limit preview to 5 ATM, so useless to send more :(
+    imgCtrl.getCategory(category)
+        .then(categorySearched => {
+            if (!categorySearched) {
+                logger.info("No matching category :", category);
+                message.channel.send("No matching category, sorry :(");
+            } else {
+                makeRequest(category, function (imageURL) {
+                    logger.info("BOMB search done :", categorySearched.id, category);
+                    if (imageURL == null) {
+                        message.channel.send("Oops, something went wrong :/");
                     } else {
-                        message.channel.send(imageURL);
+                        let msg;
+                        for (let i = 0; i < bombNumber; i++) {
+                            msg += imageURL[i] + "\n";
+                        }
+                        msg = msg.substring(9, msg.length);
+                        message.channel.send(msg);
                     }
                 });
             }
