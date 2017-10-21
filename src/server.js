@@ -8,10 +8,10 @@ import scrolller from "./controllers/imageScroller";
 isMongoAlive()
     .then(() => {
         logger.info("Mongo is alive");
-        return discord.clientLogin();
     })
     .then(() => {
         logger.info("ImageBaleine is started");
+        return discord.clientLogin();
     })
     .then(() => {
         scrolller.retrieveAllCategory();
