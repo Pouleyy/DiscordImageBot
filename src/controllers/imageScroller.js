@@ -25,9 +25,6 @@ function retrieveAllCategory() {
                     [categoryToGet, 1, 1, 1]
                 ];
                 categoryToGet++;
-                console.log(TARGET_URL);
-                console.log(HEADER);
-                console.log(bodyCat);
                 request({
                     headers: HEADER,
                     url: TARGET_URL,

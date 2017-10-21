@@ -39,7 +39,6 @@ function search(message) {
 
 function getImage(message) {
     const category = message.content.replace("!", "").toLowerCase();
-    console.log("test");
     imgCtrl.getCategory(category)
         .then(categorySearched => {
             if (!categorySearched) {
@@ -60,7 +59,6 @@ function getImage(message) {
 }
 
 function getImageBomb(message) {
-    console.log("HEY MAIS C'EST UNE BOMBE");
     const splitMessage = message.content.toLowerCase().split(" ");
     const category = splitMessage[0].replace("!", "");
     const bombNumber = splitMessage[2] && splitMessage[2] <= 5 ? splitMessage[2] : 5; //Discord limit preview to 5 ATM, so useless to send more :(
