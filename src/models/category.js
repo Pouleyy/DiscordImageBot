@@ -33,11 +33,11 @@ export const CategorySchema = new mongoose.Schema({
 
 CategorySchema.statics = {
     /**
-     * Save Category
-     * @param {Number} id - id of the category
-     * @param {String} category - Category
-     * @returns {Promise}
-     */
+    * Save Category
+    * @param {Number} id - id of the category
+    * @param {String} category - Category
+    * @returns {Promise}
+    */
     create(id, name) {
         const category = new this();
         category.id = id;

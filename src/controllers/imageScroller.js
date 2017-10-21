@@ -10,21 +10,24 @@ function retrieveAllCategory() {
         "Content-Type": "application/json"
     };
     const TARGET_URL = "https://scrolller.com/api/media";
-    const TIME_BETWEEN_REQUEST = 100;
+    const TIME_BETWEEN_REQUEST = 500;
     const NUMBER_CATEGORY = 42000;
     const START_CATEGORY = 907;
-    Category.remove()
+    Category.delete()
         .then(dbReturn => {
             logger.info("Purge done", dbReturn);
             var categoryToGet = START_CATEGORY;
             var finish = setInterval(function () {
-                if (beginNumber > NUMBER_CATEGORY) {
+                if (categoryToGet > NUMBER_CATEGORY) {
                     clearInterval(finish);
                 }
-                var bodyCat = [
+                let bodyCat = [
                     [categoryToGet, 1, 1, 1]
                 ];
                 categoryToGet++;
+                console.log(TARGET_URL);
+                console.log(HEADER);
+                console.log(bodyCat);
                 request({
                     headers: HEADER,
                     url: TARGET_URL,
@@ -32,7 +35,7 @@ function retrieveAllCategory() {
                     json: bodyCat
                 }, function (err, res, body) {
                     if (err || res.statusCode != 200) {
-                        logger.error(err);
+                        logger.error(err + categoryToGet);
                     } else {
                         let numCategory = body[0][0];
                         let nameCategory;
