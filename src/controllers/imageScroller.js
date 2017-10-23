@@ -10,7 +10,7 @@ function retrieveAllCategory() {
         "Content-Type": "application/json"
     };
     const TARGET_URL = "https://scrolller.com/api/media";
-    const TIME_BETWEEN_REQUEST = 500;
+    const TIME_BETWEEN_REQUEST = 120;
     const NUMBER_CATEGORY = 42000;
     const START_CATEGORY = 907;
     Category.delete()
