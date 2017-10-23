@@ -61,7 +61,7 @@ function getImage(message) {
 function getImageBomb(message) {
     const splitMessage = message.content.toLowerCase().split(" ");
     const category = splitMessage[0].replace("!", "");
-    const bombNumber = splitMessage[2] && splitMessage[2] <= 5 ? splitMessage[2] : 5; //Discord limit preview to 5 ATM, so useless to send more :(
+    const bombNumber = splitMessage[2] && splitMessage[2] <= 5 && splitMessage[2] > 0 ? splitMessage[2] : 5; //Discord limit preview to 5 ATM, so useless to send more :(
     imgCtrl.getCategory(category)
         .then(categorySearched => {
             if (!categorySearched) {
