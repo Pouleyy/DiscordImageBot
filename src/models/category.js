@@ -3,29 +3,34 @@ import mongoose from "../server/mongo";
 export const CategorySchema = new mongoose.Schema({
     id: {
         type: Number,
-        required: true,
         unique: true,
     },
     name: {
         type: String,
         required: true,
         unique: true,
+    },
+    relatedCategory: {
+        type: [String]
+    },
+    subreddits: [{
+        name: {
+            type: String
+        },
+        id: {
+            type: Number
+        }
+    }],
+    nbPics: {
+        type: Number
+    },
+    nbGifs: {
+        type: String
     }
+
 }, {
         timestamps: {}
     });
-
-/**
- * Virtuals fields
- */
-
-/**
- * Pre-save hooks
- */
-
-/**
- * Methods
- */
 
 /**
  * Statics
@@ -38,16 +43,29 @@ CategorySchema.statics = {
     * @param {String} category - Category
     * @returns {Promise}
     */
-    create(id, name) {
-        const category = new this();
-        category.id = id;
-        category.name = name;
-        return category.save();
+    createOrUpdate(category) {
+        return this.get(category.name)
+            .then(exist => {
+                let cat;
+                if (exist) {
+                    cat = exist;
+                }
+                else {
+                    cat = new this();
+                }
+                cat.id = category.id;
+                cat.name = category.name;
+                cat.relatedCategory = category.relatedCategory;
+                cat.subreddits = category.subreddits;
+                cat.nbPics = category.nbPics;
+                cat.nbGifs = category.nbGifs;
+                return cat.save();
+            })
     },
 
     /**
      * Get Category
-     * @param {String} category - Category
+     * @param {String} category
      * @returns {Promise}
      */
     get(category) {
@@ -71,6 +89,11 @@ CategorySchema.statics = {
         return this.find({});
     },
 
+    /**
+     * Search Category
+     * @param {String} category
+     * @returns {Promise}
+     */
     search(category) {
         return this.find({
             name: { $regex: category, $options: "i" }
