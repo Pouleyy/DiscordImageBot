@@ -3,7 +3,7 @@ import logger from "./server/logger";
 import { isAlive as isMongoAlive } from "./server/mongo";
 
 import "./commands/all";
-import scrolller from "./controllers/imageScroller";
+import scroller from "./controllers/imageScroller";
 
 isMongoAlive()
     .then(() => {
@@ -14,7 +14,7 @@ isMongoAlive()
         return discord.clientLogin();
     })
     .then(() => {
-        scrolller.retrieveAllCategory();
+        scroller.retrieveAllData();
     })
     .catch(err => {
         logger.error(err);
