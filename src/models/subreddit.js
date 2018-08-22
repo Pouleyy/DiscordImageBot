@@ -4,10 +4,12 @@ export const SubredditSchema = new mongoose.Schema({
     id: {
         type: Number,
         require: true,
+        unique: true
     },
     name: {
         type: String,
         required: true,
+        unique: true
     },
     canIGifIt: {
         type: Boolean,
@@ -47,28 +49,9 @@ export const SubredditSchema = new mongoose.Schema({
         timestamps: {}
     });
 
-
-/*
-0: Sub name
-1:Id sub
-2: NSFW ?
-3: category name
-4: related category
-5: Title sub
-6: nb subscriber
-7: description sub
-8: Age
-9: similar sub
-10: nb pics nb gifs
-11: osef
-12:null
-13: Can I gif it ?
-*/
-
-
 SubredditSchema.statics = {
     /**
-    * Create Subreddit
+    * Create Subreddit or update
     * @param {Subreddit} subToSave
     * @returns {Promise}
     */
