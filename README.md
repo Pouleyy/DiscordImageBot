@@ -1,4 +1,4 @@
-# Discord Bot Starter in Node.JS
+# Discord Bot for Image from Reddit.com
 
 ## Features
 - Send image from scrolller.com
@@ -14,7 +14,6 @@
 $ yarn install
 # You also need to set some vars in .env file, you could also use export
 $ echo "DISCORD_TOKEN={YOUR_MAGIC_TOKEN}" > .env
-$ echo "DISCORD_CHAN_ID={YOUR_MAGIC_TOKEN}" >> .env #Default post channel id
 ```
 
 ### Build
