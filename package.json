@@ -1,10 +1,10 @@
 {
-  "name": "ImageBaleine",
-  "version": "1.1.0",
-  "description": "Discord Image Bot for \"La Baleine\"",
+  "name": "DiscordImageBot",
+  "version": "2.0.0",
+  "description": "Image Bot for Discord",
   "main": "dist/server.js",
-  "repository": "https://github.com/LaBaleineFr/ImageBaleine",
-  "author": "SushiFu <SushiFu@gmx.fr>",
+  "repository": "https://github.com/Pouleyy/DiscordImageBot",
+  "author": "Pouleyy",
   "license": "MIT",
   "scripts": {
     "build": "gulp build",
