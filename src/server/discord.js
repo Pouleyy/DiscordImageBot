@@ -73,4 +73,45 @@ function sendOn(channel, message) {
     return channel.send(message);
 }
 
-export default { client, clientLogin, onCmdChannelMessage, onDefaultChannelMessage, onMessageEverywhere, sendOnCmdChannel, sendOnDefaultChannel, sendOn };
+/**
+ * Set the game played by the bot, seems to not work
+ */
+client.on("ready", async () => {
+    client.user.setActivity("!help for help", { type: "WATCHING" });
+
+});
+
+/**
+ * Get the bot avatar URL
+ * @returns {String}
+ */
+function getAvatarURL() {
+    return client.user.avatarURL;
+}
+
+/**
+ * Get the bot username
+ * @returns {string}
+ */
+function getUsername() {
+    return client.user.username;
+}
+
+
+function guildNumber() {
+    const test = client.guilds.size;
+}
+
+export default {
+    client,
+    clientLogin,
+    onCmdChannelMessage,
+    onDefaultChannelMessage,
+    onMessageEverywhere,
+    sendOnCmdChannel,
+    sendOnDefaultChannel,
+    sendOn,
+    getAvatarURL,
+    getUsername,
+    guildNumber
+};
