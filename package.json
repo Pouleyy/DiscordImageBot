@@ -14,20 +14,23 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-preset-env": "^1.4.0",
+    "babel-preset-env": "^1.7.0",
     "del": "^2.2.2",
     "eslint": "^3.19.0",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
-    "gulp-sourcemaps": "^2.6.0",
-    "nodemon": "^1.11.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "nodemon": "^1.18.3",
     "pump": "^1.0.2"
   },
   "dependencies": {
     "bunyan": "^1.8.10",
-    "discord.js": "^11.0.0",
+    "cheerio": "^1.0.0-rc.2",
+    "discord.js": "11.3.2",
     "mongoose": "^4.9.6",
-    "request": "^2.81.0"
+    "puppeteer": "^1.7.0",
+    "request": "^2.88.0",
+    "xml2js": "^0.4.19"
   }
 }
