@@ -98,7 +98,7 @@ function search(args, message) {
             } else {
                 logger.info("Searched category " + cat + " " + cats.length + " match found");
                 const catsWithOnlyName = utils.extractName(cats, "!c ");
-                const array = utils.divideInMultipleArrays(catsWithOnlyName, 75);
+                const array = utils.divideInMultipleArrays(catsWithOnlyName, 30);
 
                 embed.setTitle("Search for category : " + cat);
                 array.map(s => embed.addField("\u200B", s, true));
