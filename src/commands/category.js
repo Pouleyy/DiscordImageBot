@@ -93,7 +93,7 @@ function search(args, message) {
         .then(cats => {
             if (cats.length === 0) {
                 logger.info("No matching category :", cat);
-                embed.setColor(16711680).addField("No matching subreddit, sorry :(", "\u200B");
+                embed.setColor(16711680).addField("No matching category, sorry :(", "\u200B");
                 message.channel.send({ embed });
             } else {
                 logger.info("Searched category " + cat + " " + cats.length + " match found");
