@@ -116,7 +116,7 @@ function info(args, message) {
         .then(catFound => {
             const embed = new RichEmbed();
             if (!catFound) {
-                logger.error("No matching cat :", cat);
+                logger.error("No matching category :", cat);
                 embed.setColor(16711680).addField("No matching category, sorry :(", "\u200B");
                 message.channel.send({ embed });
             } else {

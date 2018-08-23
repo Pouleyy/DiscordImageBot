@@ -10,7 +10,7 @@ function get(command, args, message) {
     return subCtrl.getSubreddit(sub)
         .then(subSearched => {
             if (!subSearched) {
-                logger.error("No matching sub :", sub);
+                logger.error("No matching subreddit :", sub);
                 embed.setColor(16711680).addField("No matching subreddit, sorry :(", "\u200B");
                 message.channel.send({ embed });
             } else {
@@ -73,7 +73,7 @@ function search(args, message) {
     subCtrl.searchSubreddit(sub)
         .then(subs => {
             if (subs.length === 0) {
-                logger.error("No matching sub :", sub);
+                logger.error("No matching subreddit :", sub);
                 embed.setColor(16711680).addField("No matching subreddit, sorry :(", "\u200B");
                 message.channel.send({ embed });
             } else {
