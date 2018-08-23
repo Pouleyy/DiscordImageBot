@@ -48,9 +48,10 @@ function loop(allSub) {
     const TIME_BETWEEN_REQUEST = 150;
     const INDEX_MAX = allSub.length;
     let index = 0;
+    logger.info(INDEX_MAX + " subreddits to save");
     let finish = setInterval(function () {
         if (index >= INDEX_MAX - 1) {
-            logger.info(index + " sub saved in " + TIME_BETWEEN_REQUEST * index / 60000 + " min");
+            logger.info(index + " subreddit saved in " + TIME_BETWEEN_REQUEST * index / 60000 + " min");
             clearInterval(finish);
         }
         const url = allSub[index].loc[0];
@@ -144,9 +145,10 @@ function getInfoCat(categories) {
     const TIME_BETWEEN_REQUEST = 1000;
     const INDEX_MAX = categories.length;
     let index = 0;
-    logger.info(INDEX_MAX + " cat to save");
+    logger.info(INDEX_MAX + " category to save");
     let finish = setInterval(function () {
         if (index >= INDEX_MAX - 1) {
+            logger.info(index + " category saved in " + TIME_BETWEEN_REQUEST * index / 60000 + " min");
             clearInterval(finish);
         }
         const catName = categories[index].name;
