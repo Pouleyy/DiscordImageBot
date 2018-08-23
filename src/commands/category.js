@@ -88,7 +88,7 @@ function getMedia(page, nameCat, args, message, media, length) {
 
 
 function search(args, message) {
-    const cat = args[0];
+    const cat = args[0] ? args[0] : ".";
     const embed = new RichEmbed();
     catCtrl.searchCategory(cat)
         .then(cats => {
