@@ -134,7 +134,6 @@ function retrieveAllCat() {
                     }
                 });
                 categories.push(cat);
-                //logger.debug(cat);
             });
             getInfoCat(categories);
         }

@@ -53,10 +53,8 @@ function getMedia(page, nameCat, args, message, media, length) {
             let $ = cheerio.load(content);
             const urlFound = $('img').toArray().map(image => $(image).attr("src"));
             if (urlFound.length <= 2) {
-                logger.info("PUTEUH")
                 page.click('#intro-settings > div > div > div > div:nth-child(3) > div:nth-child(2) > div')
                     .then(resp => {
-                        console.log("ON APPELLE LA FONCTIoN", resp)
                         getMedia(page, nameCat, args, message, media, length)
                     })
             }
@@ -74,11 +72,9 @@ function getMedia(page, nameCat, args, message, media, length) {
                 media = media.map(url => {
                     if (url.includes("-thumb")) {
                         url = url.replace("-thumb.jpg", ".mp4");
-                        logger.info(url);
                     }
                     return url;
                 })
-                logger.info(media)
                 message.channel.send(media.slice(0, length)).then(buffer => {
                     logger.debug("Page " + nameCat + " closed");
                     page.close()
