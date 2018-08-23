@@ -1,6 +1,5 @@
 import logger from "../server/logger";
 import catCtrl from "../controllers/category";
-import request from "request";
 import { RichEmbed } from "discord.js";
 import utils from "../utils/utils";
 import puppeteer from 'puppeteer';
