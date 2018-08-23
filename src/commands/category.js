@@ -62,7 +62,7 @@ function getMedia(page, nameCat, args, message, media, length) {
             if (args.includes("gif")) {
                 media = media.concat(urlFound.filter(url => url.includes("thumb")));
             } else if (args.includes("pic")) {
-                media = media.concat(urlFound.find(url => url.includes(".jpg")));
+                media = media.concat(urlFound.find(url => url.includes(".jpg") && !(url.includes("thumb"))));
             } else {
                 media = media.concat(urlFound);
             }
