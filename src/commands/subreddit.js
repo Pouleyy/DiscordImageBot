@@ -79,7 +79,7 @@ function search(args, message) {
             } else {
                 logger.info("Searched sub " + sub + " " + subs.length + " match found");
                 const subsWithOnlyName = utils.extractName(subs, "!");
-                const array = utils.divideInMultipleArrays(subsWithOnlyName, 75);
+                const array = utils.divideInMultipleArrays(subsWithOnlyName, 70);
                 embed.setTitle("Search for subreddit : " + sub);
                 array.map(s => embed.addField("\u200B", s, true));
                 embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
