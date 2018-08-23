@@ -118,6 +118,19 @@ function retrieveAllCat() {
                 category[3].map(sub => {
                     if (sub[0] != 0) {
                         cat.subreddits.push({ "name": sub[2], "id": sub[1] });
+                    } else {
+                        let subcat = {
+                            id: sub[1],
+                            name: sub[2],
+                            subreddits: [],
+                        }
+                        sub[3].map(subsub => {
+                            if (subsub[0] != 0) {
+                                cat.subreddits.push({ "name": subsub[2], "id": subsub[1] });
+                                subcat.subreddits.push({ "name": subsub[2], "id": subsub[1] });
+                            }
+                        })
+                        categories.push(subcat);
                     }
                 });
                 categories.push(cat);
