@@ -72,13 +72,18 @@ function search(args, message) {
                 utils.sendErrorEmbed(message, `No matching subreddit, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 logger.info(`Searched sub ${sub} ${subs.length} match found`);
-                const embed = new RichEmbed();
                 const subsWithOnlyName = utils.extractName(subs, "!");
-                const array = utils.divideInMultipleArrays(subsWithOnlyName, 70);
-                embed.setTitle(`Search for subreddit : ${sub}`);
-                array.map(s => embed.addField("\u200B", s, true));
-                embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
-                message.channel.send({ embed })
+                const arrays = utils.divideInMultipleArrays(subsWithOnlyName, 30);
+                const embeds = utils.divideInMultipleEmbed(arrays, 18);
+                embeds.map((embed, index) => {
+                    embed.setTitle(`Search ${index + 1}/${embeds.length} for subreddit : ${sub}`);
+                    embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
+                    message.channel.send({ embed })
+                });
+                // embed.setTitle(`Search for subreddit : ${sub}`);
+                // arrays.map(s => embed.addField("\u200B", s, true));
+                // embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
+                // message.channel.send({ embed })
             }
         })
         .catch(err => logger.error(err));
