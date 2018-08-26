@@ -49,6 +49,6 @@ function help(message) {
         .addField("Get info about a category", "`!infoc category`")
         .addField("Get content from a category", "`!c category (gif|pic) (bomb)` \nGet for you pictures and gifs from this category, you can ask only gifs with `gif` option or only pictures with `pic` the option\n`bomb` option give you 5 pics/gifs")
         .addField("Search category", "`!searchc category` Look in the Okedan's database for categories that match your research \nYou can search all categories with `!searchc`")
-        .addField(`Invite ${username} to your server by clicking on this :`, `[Invitation link](https://discordapp.com/api/oauth2/authorize?client_id=${ID}&scope=bot)`);
+        .addField(`Invite ${username} to your server by clicking on this :`, `[Invitation link](https://discordapp.com/api/oauth2/authorize?client_id=${ID}&scope=bot&permissions=19456)`);
     message.channel.send({ embed })
 }
