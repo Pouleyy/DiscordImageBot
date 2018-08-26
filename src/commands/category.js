@@ -43,7 +43,7 @@ function get(args, message) {
 }
 
 function getMedia(page, nameCat, args, message, media, length) {
-    const URL = "https://scrolller.com/" + nameCat
+    const URL = `https://scrolller.com${nameCat}`
     page.goto(URL)
         .then(resp => page.setViewport({ width: 1000, height: 800 }))
         .then(resp => page.waitFor(2000))
@@ -67,7 +67,7 @@ function getMedia(page, nameCat, args, message, media, length) {
                 media = media.concat(urlFound);
             }
             if (media.length >= length) {
-                logger.info("Request category for :", nameCat);
+                logger.info("Request category for : ", nameCat);
                 media = media.map(url => {
                     if (url.includes("-thumb")) {
                         url = url.replace("-thumb.jpg", ".mp4");
@@ -75,7 +75,7 @@ function getMedia(page, nameCat, args, message, media, length) {
                     return url;
                 })
                 message.channel.send(media.slice(0, length)).then(buffer => {
-                    logger.debug("Page " + nameCat + " closed");
+                    logger.debug(`Page ${nameCat} closed`);
                     page.close()
                 })
             } else {
@@ -96,7 +96,7 @@ function search(args, message) {
                 embed.setColor(16711680).addField("No matching category, sorry :(", "\u200B");
                 message.channel.send({ embed });
             } else {
-                logger.info("Searched category " + cat + " " + cats.length + " match found");
+                logger.info(`Searched category {cat} ${cats.length} match found`);
                 const catsWithOnlyName = utils.extractName(cats, "!c ");
                 const array = utils.divideInMultipleArrays(catsWithOnlyName, 30);
 
@@ -122,8 +122,8 @@ function info(args, message) {
             } else {
                 embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
                 embed.setTitle(catFound.name[0].toUpperCase() + catFound.name.slice(1));
-                embed.setURL("https://scrolller.com/" + catFound.name);
-                embed.setDescription("This category is made of " + catFound.subreddits.length + " subreddits");
+                embed.setURL(`https://scrolller.com/${catFound.name}`);
+                embed.setDescription(`This category is made of ${catFound.subreddits.length} subreddits`);
 
                 embed.addField("Pictures", catFound.nbPics, true);
                 embed.addField("Gifs", catFound.nbGifs, true);

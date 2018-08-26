@@ -50,7 +50,7 @@ function makeRequest(sub, callback) {
     const HEADER = {
         "Content-Type": "application/json"
     };
-    const TARGET_URL = "https://scrolller.com/api/random/" + sub;
+    const TARGET_URL = `https://scrolller.com/api/random/${sub}`;
     const METHOD = "GET";
     request({
         headers: HEADER,
@@ -77,10 +77,10 @@ function search(args, message) {
                 embed.setColor(16711680).addField("No matching subreddit, sorry :(", "\u200B");
                 message.channel.send({ embed });
             } else {
-                logger.info("Searched sub " + sub + " " + subs.length + " match found");
+                logger.info(`Searched sub ${sub} ${sub.length} match found`);
                 const subsWithOnlyName = utils.extractName(subs, "!");
                 const array = utils.divideInMultipleArrays(subsWithOnlyName, 70);
-                embed.setTitle("Search for subreddit : " + sub);
+                embed.setTitle(`Search for subreddit : ${sub}`);
                 array.map(s => embed.addField("\u200B", s, true));
                 embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
                 message.channel.send({ embed });
@@ -105,7 +105,7 @@ function info(args, message) {
                     const thumbnail = imageURL ? imageURL.find(url => url.includes(".jpg")) : "";
                     embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
                     embed.setTitle(sub[0].toUpperCase() + sub.slice(1));
-                    embed.setURL("https://www.reddit.com/r/" + sub);
+                    embed.setURL(`https://www.reddit.com/r/${sub}`);
                     embed.setDescription(subFound.title);
                     embed.setThumbnail(thumbnail);
 
