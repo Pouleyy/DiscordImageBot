@@ -1,3 +1,5 @@
+import { RichEmbed } from "discord.js";
+
 function arrayToString(array) {
     return array.reduce((prev, cur) => prev + ", " + cur);
 }
@@ -22,8 +24,20 @@ function extractName(array, prefix) {
     return array.map(element => prefix + element.name);
 }
 
+function sendErrorEmbed(message, messageError) {
+    const embed = new RichEmbed().setColor(16711680).addField(messageError, "\u200B");
+    message.channel.send({ embed });
+}
+
+function sadEmojiPicker() {
+    const sadEmoji = ["😩", "😕", "😔", "😫", "😖"];
+    return sadEmoji[Math.floor((Math.random() * sadEmoji.length))];
+}
+
 export default {
     arrayToString,
     divideInMultipleArrays,
     extractName,
+    sendErrorEmbed,
+    sadEmojiPicker,
 }

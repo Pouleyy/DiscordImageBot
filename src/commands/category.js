@@ -27,8 +27,7 @@ function get(args, message) {
         .then(category => {
             if (!category) {
                 logger.error("No matching category :", cat);
-                const embed = new RichEmbed().setColor(16711680).addField("No matching category, sorry :(", "\u200B");
-                message.channel.send({ embed });
+                utils.sendErrorEmbed(message, `No matching category, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 const nameCat = category.name;
                 browser.newPage()
@@ -88,18 +87,16 @@ function getMedia(page, nameCat, args, message, media, length) {
 
 function search(args, message) {
     const cat = args[0] ? args[0] : ".";
-    const embed = new RichEmbed();
     catCtrl.searchCategory(cat)
         .then(cats => {
             if (cats.length === 0) {
                 logger.info("No matching category :", cat);
-                embed.setColor(16711680).addField("No matching category, sorry :(", "\u200B");
-                message.channel.send({ embed });
+                utils.sendErrorEmbed(message, `No matching category, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 logger.info(`Searched category {cat} ${cats.length} match found`);
                 const catsWithOnlyName = utils.extractName(cats, "!c ");
                 const array = utils.divideInMultipleArrays(catsWithOnlyName, 30);
-
+                const embed = new RichEmbed();
                 embed.setTitle("Search for category : " + cat);
                 array.map(s => embed.addField("\u200B", s, true));
                 embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
@@ -114,12 +111,11 @@ function info(args, message) {
     logger.info("Info on :", cat);
     catCtrl.getCategory(cat)
         .then(catFound => {
-            const embed = new RichEmbed();
             if (!catFound) {
                 logger.error("No matching category :", cat);
-                embed.setColor(16711680).addField("No matching category, sorry :(", "\u200B");
-                message.channel.send({ embed });
+                utils.sendErrorEmbed(message, `No matching category, sorry ${utils.sadEmojiPicker()}`);
             } else {
+                const embed = new RichEmbed();
                 embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
                 embed.setTitle(catFound.name[0].toUpperCase() + catFound.name.slice(1));
                 embed.setURL(`https://scrolller.com/${catFound.name}`);

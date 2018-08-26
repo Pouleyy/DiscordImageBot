@@ -6,13 +6,11 @@ import utils from "../utils/utils";
 
 function get(command, args, message) {
     const sub = command;
-    const embed = new RichEmbed();
     return subCtrl.getSubreddit(sub)
         .then(subSearched => {
             if (!subSearched) {
                 logger.error("No matching subreddit :", sub);
-                embed.setColor(16711680).addField("No matching subreddit, sorry :(", "\u200B");
-                message.channel.send({ embed });
+                utils.sendErrorEmbed(message, `No matching subreddit, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 let images = [];
                 args.includes("bomb") ? getMedia(subSearched, args, message, images, 5) : getMedia(subSearched, args, message, images, 1);
@@ -24,10 +22,8 @@ function get(command, args, message) {
 function getMedia(sub, args, message, images, length) {
     makeRequest(sub.name, function (imageURL) {
         if (imageURL == null) {
-            const embed = new RichEmbed();
             logger.error("Error while requesting", sub);
-            embed.setColor(16711680).addField("Oops, something went wrong :/", "\u200B");
-            message.channel.send({ embed });
+            utils.sendErrorEmbed(message, `No matching subreddit, sorry ${utils.sadEmojiPicker()}`);
         } else {
             if (args.includes("gif") && sub.canIGifIt) {
                 images = images.concat(imageURL.filter(url => url.includes(".mp4") || url.includes(".webm")));
@@ -69,21 +65,20 @@ function makeRequest(sub, callback) {
 
 function search(args, message) {
     const sub = args[0];
-    const embed = new RichEmbed();
     subCtrl.searchSubreddit(sub)
         .then(subs => {
             if (subs.length === 0) {
                 logger.error("No matching subreddit :", sub);
-                embed.setColor(16711680).addField("No matching subreddit, sorry :(", "\u200B");
-                message.channel.send({ embed });
+                utils.sendErrorEmbed(message, `No matching subreddit, sorry ${utils.sadEmojiPicker()}`);
             } else {
-                logger.info(`Searched sub ${sub} ${sub.length} match found`);
+                logger.info(`Searched sub ${sub} ${subs.length} match found`);
+                const embed = new RichEmbed();
                 const subsWithOnlyName = utils.extractName(subs, "!");
                 const array = utils.divideInMultipleArrays(subsWithOnlyName, 70);
                 embed.setTitle(`Search for subreddit : ${sub}`);
                 array.map(s => embed.addField("\u200B", s, true));
                 embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
-                message.channel.send({ embed });
+                message.channel.send({ embed })
             }
         })
         .catch(err => logger.error(err));
@@ -94,15 +89,14 @@ function info(args, message) {
     logger.info("Info on :", sub);
     subCtrl.getSubreddit(sub)
         .then(subFound => {
-            const embed = new RichEmbed();
             if (!subFound) {
                 logger.error("No matching sub :", sub);
-                embed.setColor(16711680).addField("No matching subreddit, sorry :(", "\u200B");
-                message.channel.send({ embed });
+                utils.sendErrorEmbed(message, `No matching subreddit, sorry ${utils.sadEmojiPicker()}`);
                 return;
             } else {
                 makeRequest(subFound.name, function (imageURL) {
                     const thumbnail = imageURL ? imageURL.find(url => url.includes(".jpg")) : "";
+                    const embed = new RichEmbed();
                     embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
                     embed.setTitle(sub[0].toUpperCase() + sub.slice(1));
                     embed.setURL(`https://www.reddit.com/r/${sub}`);
