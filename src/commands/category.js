@@ -93,7 +93,7 @@ function search(args, message) {
                 logger.info("No matching category :", cat);
                 utils.sendErrorEmbed(message, `No matching category, sorry ${utils.sadEmojiPicker()}`);
             } else {
-                logger.info(`Searched category {cat} ${cats.length} match found`);
+                logger.info(`Searched category ${cat} ${cats.length} match found`);
                 const catsWithOnlyName = utils.extractName(cats, "!c ");
                 const array = utils.divideInMultipleArrays(catsWithOnlyName, 30);
                 const embed = new RichEmbed();
