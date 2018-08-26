@@ -91,16 +91,28 @@ function getAvatarURL() {
 
 /**
  * Get the bot username
- * @returns {string}
+ * @returns {String}
  */
 function getUsername() {
     return client.user.username;
 }
 
+/**
+ * Get the bot ID
+ * @returns {Number}
+ */
+function getID() {
+    return client.user.id;
+}
 
+/**
+ * 
+ */
 function guildNumber() {
     const test = client.guilds.size;
 }
+
+
 
 export default {
     client,
@@ -113,5 +125,5 @@ export default {
     sendOn,
     getAvatarURL,
     getUsername,
-    guildNumber
+    getID,
 };
