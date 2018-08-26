@@ -80,10 +80,6 @@ function search(args, message) {
                     embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
                     message.channel.send({ embed })
                 });
-                // embed.setTitle(`Search for subreddit : ${sub}`);
-                // arrays.map(s => embed.addField("\u200B", s, true));
-                // embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
-                // message.channel.send({ embed })
             }
         })
         .catch(err => logger.error(err));
