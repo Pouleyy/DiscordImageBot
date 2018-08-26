@@ -125,10 +125,32 @@ function info(args, message) {
                 embed.addField("Gifs", catFound.nbGifs, true);
 
                 embed.addField("Related category", catFound.relatedCategory.length == 0 ? "No related category 😕" : utils.arrayToString(catFound.relatedCategory));
-                const array = utils.divideInMultipleArrays(utils.extractName(catFound.subreddits, ""), 25);
-                array.map((element, index) => index === 0 ? embed.addField("Subreddits", element, true) : embed.addField("\u200b", element, true));
+                const subreddits = utils.divideInMultipleArrays(utils.extractName(catFound.subreddits, ""), 25);
+                subreddits.every((array, index) => {
+                    if (index >= 9) {
+                        return false;
+                    } else {
+                        index === 0 ? embed.addField("Subreddits", array, true) : embed.addField("\u200b", array, true);
+                        return true;
+                    }
+                });
 
-                message.channel.send({ embed });
+                subreddits.splice(0, 9);
+                if (subreddits.length === 0) {
+                    message.channel.send({ embed });
+                } else {
+                    const embeds = utils.divideInMultipleEmbed(subreddits, 18);
+                    embeds.unshift(embed);
+                    embeds.map((embed, index) => {
+                        if (index === 0) message.channel.send({ embed })
+                        else {
+                            embed.setTitle(`Subreddits ${index + 1}/${embeds.length} for ${catFound.name[0].toUpperCase() + catFound.name.slice(1)}`);
+                            embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
+                            message.channel.send({ embed });
+                        }
+                    });
+
+                }
             }
         })
         .catch(err => logger.error(err));

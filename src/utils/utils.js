@@ -34,10 +34,35 @@ function sadEmojiPicker() {
     return sadEmoji[Math.floor((Math.random() * sadEmoji.length))];
 }
 
+function divideInMultipleEmbed(arrays, length) {
+    let embeds = [];
+    if (arrays.length > length) {
+        while (arrays.length) {
+            const embed = new RichEmbed();
+            arrays.every((array, index) => {
+                if (index >= 21) {
+                    return false;
+                } else {
+                    embed.addField("\u200b", array, true)
+                    return true;
+                }
+            });
+            embeds.push(embed);
+            arrays.splice(0, 21);
+        }
+    } else {
+        const embed = new RichEmbed();
+        arrays.map(array => embed.addField("\u200B", array, true));
+        embeds.push(embed);
+    }
+    return embeds;
+}
+
 export default {
     arrayToString,
     divideInMultipleArrays,
     extractName,
     sendErrorEmbed,
     sadEmojiPicker,
+    divideInMultipleEmbed,
 }
