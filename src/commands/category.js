@@ -29,12 +29,18 @@ function get(args, message) {
                 utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 const nameCat = category.name;
-                browser.newPage()
-                    .then(page => {
-                        let media = [];
-                        args.includes("bomb") ? getMedia(page, nameCat, args, message, media, 5) : getMedia(page, nameCat, args, message, media, 1);
-
-                    });
+                let media = [];
+                if (message.channel.nsfw) {
+                    browser.newPage()
+                        .then(page => {
+                            args.includes("bomb") ? getMedia(page, nameCat, args, message, media, 5) : getMedia(page, nameCat, args, message, media, 1);
+                        });
+                } else {
+                    category.nsfw ? utils.sendErrorEmbed(message, `Sorry it seems that you're in a SFW channel and you request a NSFW category ${utils.sadEmojiPicker()}`) : browser.newPage()
+                        .then(page => {
+                            args.includes("bomb") ? getMedia(page, nameCat, args, message, media, 5) : getMedia(page, nameCat, args, message, media, 1);
+                        });
+                }
             }
         })
         .catch(err => logger.error(err));

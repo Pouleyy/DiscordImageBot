@@ -12,7 +12,11 @@ function get(command, args, message) {
                 utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 let images = [];
-                args.includes("bomb") ? getMedia(subSearched, args, message, images, 5) : getMedia(subSearched, args, message, images, 1);
+                if (message.channel.nsfw) {
+                    args.includes("bomb") ? getMedia(subSearched, args, message, images, 5) : getMedia(subSearched, args, message, images, 1);
+                } else {
+                    subSearched.nsfw ? utils.sendErrorEmbed(message, `Sorry it seems that you're in a SFW channel and you request a NSFW subreddit ${utils.sadEmojiPicker()}`) : args.includes("bomb") ? getMedia(subSearched, args, message, images, 5) : getMedia(subSearched, args, message, images, 1);
+                }
             }
         })
         .catch(err => logger.error(err));
@@ -92,7 +96,7 @@ function info(args, message) {
                 return;
             } else {
                 makeRequest(subFound.name, function (imageURL) {
-                    const thumbnail = imageURL ? imageURL.find(url => url.includes(".jpg")) : "";
+                    const thumbnail = !imageURL ? null : message.channel.nsfw ? imageURL.find(url => url.includes(".jpg")) : subFound.nsfw ? null : imageURL.find(url => url.includes(".jpg"));
                     const embed = new RichEmbed();
                     embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
                     embed.setTitle(sub[0].toUpperCase() + sub.slice(1));
