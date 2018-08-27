@@ -41,7 +41,7 @@ function get(args, message) {
 }
 
 function getMedia(page, nameCat, args, message, media, length) {
-    const URL = `https://scrolller.com${nameCat}`
+    const URL = `https://scrolller.com/${nameCat}`
     page.goto(URL)
         .then(resp => page.setViewport({ width: 1000, height: 800 }))
         .then(resp => page.waitFor(2000))
