@@ -185,6 +185,7 @@ function saveOneCat(category, info) {
         subreddits: category.subreddits,
         nbPics: info[0][7][0],
         nbGifs: info[0][7][1],
+        nsfw: info[0][2]
     };
     Category.createOrUpdate(catToSave)
         .then(catSaved => {
