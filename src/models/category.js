@@ -26,8 +26,10 @@ export const CategorySchema = new mongoose.Schema({
     },
     nbGifs: {
         type: String
+    },
+    nsfw: {
+        type: Boolean
     }
-
 }, {
         timestamps: {}
     });
@@ -59,6 +61,7 @@ CategorySchema.statics = {
                 cat.subreddits = category.subreddits;
                 cat.nbPics = category.nbPics;
                 cat.nbGifs = category.nbGifs;
+                cat.nsfw = category.nsfw;
                 return cat.save();
             })
     },
