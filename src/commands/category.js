@@ -26,8 +26,7 @@ function get(args, message) {
     catCtrl.getCategory(cat)
         .then(category => {
             if (!category) {
-                logger.error("No matching category :", cat);
-                utils.sendErrorEmbed(message, `No matching category, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 const nameCat = category.name;
                 browser.newPage()
@@ -90,8 +89,7 @@ function search(args, message) {
     catCtrl.searchCategory(cat)
         .then(cats => {
             if (cats.length === 0) {
-                logger.info("No matching category :", cat);
-                utils.sendErrorEmbed(message, `No matching category, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 logger.info(`Searched category ${cat} ${cats.length} match found`);
                 const catsWithOnlyName = utils.extractName(cats, "!c ");
@@ -112,8 +110,7 @@ function info(args, message) {
     catCtrl.getCategory(cat)
         .then(catFound => {
             if (!catFound) {
-                logger.error("No matching category :", cat);
-                utils.sendErrorEmbed(message, `No matching category, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 const embed = new RichEmbed();
                 embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
