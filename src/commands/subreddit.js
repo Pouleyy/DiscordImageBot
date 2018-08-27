@@ -9,8 +9,7 @@ function get(command, args, message) {
     return subCtrl.getSubreddit(sub)
         .then(subSearched => {
             if (!subSearched) {
-                logger.error("No matching subreddit :", sub);
-                utils.sendErrorEmbed(message, `No matching subreddit, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 let images = [];
                 args.includes("bomb") ? getMedia(subSearched, args, message, images, 5) : getMedia(subSearched, args, message, images, 1);
@@ -22,8 +21,7 @@ function get(command, args, message) {
 function getMedia(sub, args, message, images, length) {
     makeRequest(sub.name, function (imageURL) {
         if (imageURL == null) {
-            logger.error("Error while requesting", sub);
-            utils.sendErrorEmbed(message, `No matching subreddit, sorry ${utils.sadEmojiPicker()}`);
+            utils.sendErrorEmbed(message, `Error while requesting ${sub}, sorry ${utils.sadEmojiPicker()}`);
         } else {
             if (args.includes("gif") && sub.canIGifIt) {
                 images = images.concat(imageURL.filter(url => url.includes(".mp4") || url.includes(".webm")));
@@ -68,8 +66,7 @@ function search(args, message) {
     subCtrl.searchSubreddit(sub)
         .then(subs => {
             if (subs.length === 0) {
-                logger.error("No matching subreddit :", sub);
-                utils.sendErrorEmbed(message, `No matching subreddit, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
             } else {
                 logger.info(`Searched sub ${sub} ${subs.length} match found`);
                 const subsWithOnlyName = utils.extractName(subs, "!");
@@ -91,8 +88,7 @@ function info(args, message) {
     subCtrl.getSubreddit(sub)
         .then(subFound => {
             if (!subFound) {
-                logger.error("No matching sub :", sub);
-                utils.sendErrorEmbed(message, `No matching subreddit, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
                 return;
             } else {
                 makeRequest(subFound.name, function (imageURL) {
