@@ -1,4 +1,5 @@
 import { RichEmbed } from "discord.js";
+import logger from "../server/logger";
 
 function arrayToString(array) {
     return array.reduce((prev, cur) => prev + ", " + cur);
@@ -25,6 +26,7 @@ function extractName(array, prefix) {
 }
 
 function sendErrorEmbed(message, messageError) {
+    logger.error(`Error from ${message.member.user.username} in ${message.channel.name} in guild ${message.guild.name} "${messageError}"`);
     const embed = new RichEmbed().setColor(16711680).addField(messageError, "\u200B");
     message.channel.send({ embed });
 }
