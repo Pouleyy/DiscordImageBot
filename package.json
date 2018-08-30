@@ -16,6 +16,7 @@
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "del": "^2.2.2",
+    "dumper.js": "^1.1.1",
     "eslint": "^3.19.0",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-babel": "^6.1.2",
@@ -27,6 +28,7 @@
   "dependencies": {
     "bunyan": "^1.8.10",
     "cheerio": "^1.0.0-rc.2",
+    "dblapi.js": "^2.2.0",
     "discord.js": "11.3.2",
     "mongoose": "^4.9.6",
     "puppeteer": "^1.7.0",
