@@ -6,7 +6,8 @@ const params = {
     LOG_LEVEL: process.env.LOG_LEVEL,
     MONGO_URL: process.env.MONGO_URL,
     DISCORD_TOKEN: process.env.DISCORD_TOKEN,
-    DISCORD_CHAN_ID: process.env.DISCORD_CHAN_ID
+    DISCORD_CHAN_ID: process.env.DISCORD_CHAN_ID,
+    DISCORD_BOTS_TOKEN: process.env.DISCORD_BOTS_TOKEN
 };
 
 Object.keys(params).forEach((key) => {

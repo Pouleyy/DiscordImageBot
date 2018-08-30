@@ -21,6 +21,7 @@ services:
             - MONGO_URL=mongodb://mongodb:27017/baleinebot
             - DISCORD_TOKEN=${DISCORD_TOKEN}
             - DISCORD_CHAN_ID=${DISCORD_CHAN_ID}
+            - DISCORD_BOTS_TOKEN=${DISCORD_BOTS_TOKEN}
 
     # bot-test:
     #     image: node:latest

@@ -1,7 +1,12 @@
 import Discord from "discord.js";
 import config from "./config";
+import DBL from "dblapi.js";
+
+import logger from "../server/logger";
 
 const client = new Discord.Client();
+const dbl = new DBL(config.DISCORD_BOTS_TOKEN, client);
+let startDate;
 
 /**
  * Login Discord Bot
@@ -74,12 +79,21 @@ function sendOn(channel, message) {
 }
 
 /**
- * Set the game played by the bot, seems to not work
- */
+ * Set the game played by the bot
+*/
 client.on("ready", async () => {
+    startDate = new Date();
     client.user.setActivity("!help for help", { type: "WATCHING" });
+    setInterval(() => {
+        dbl.postStats(client.guilds.size);
+    }, 1800000);
 
 });
+
+/**
+ * 
+ */
+//dbl.
 
 /**
  * Get the bot avatar URL
@@ -106,10 +120,19 @@ function getID() {
 }
 
 /**
+ * Get an emoji by its id
+ * @returns {String}
+ */
+function getEmoji(id) {
+    return client.emojis.get(id)
+}
+
+/**
  * 
  */
-function guildNumber() {
-    const test = client.guilds.size;
+function guildName() {
+    const test = client.guilds;
+    logger.info(test.map(guild => guild.name));
 }
 
 
@@ -126,4 +149,6 @@ export default {
     getAvatarURL,
     getUsername,
     getID,
+    guildName,
+    getEmoji,
 };
