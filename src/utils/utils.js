@@ -26,7 +26,7 @@ function extractName(array, prefix) {
 }
 
 function sendErrorEmbed(message, messageError) {
-    logger.error(`Error from ${message.member.user.username} in ${message.channel.name} in guild ${message.guild.name} "${messageError}"`);
+    logger.error(`Error from ${extractInfoFromMessage(message)} "${messageError}"`);
     const embed = new RichEmbed().setColor(16711680).addField(messageError, "\u200B");
     message.channel.send({ embed });
 }
@@ -66,6 +66,11 @@ function divideInMultipleEmbed(arrays, length) {
     return embeds;
 }
 
+function extractInfoFromMessage(message) {
+    const test = `from ${message.member.user.username} in ${message.channel.name} in guild ${message.guild.name}`;
+    return test;
+}
+
 export default {
     arrayToString,
     divideInMultipleArrays,
@@ -74,4 +79,5 @@ export default {
     sadEmojiPicker,
     divideInMultipleEmbed,
     shockedEmojiPicker,
+    extractInfoFromMessage
 }
