@@ -91,9 +91,11 @@ client.on("ready", async () => {
 });
 
 /**
- * 
+ * Handle on error event 
  */
-//dbl.
+client.on("error", error => {
+    logger.error(error);
+});
 
 /**
  * Get the bot avatar URL
