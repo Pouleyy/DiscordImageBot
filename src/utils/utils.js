@@ -36,6 +36,12 @@ function sadEmojiPicker() {
     return sadEmoji[Math.floor((Math.random() * sadEmoji.length))];
 }
 
+function shockedEmojiPicker() {
+    const shockedEmoji = ["😯", "😲", "😱", "😵", "😳"];
+    return shockedEmoji[Math.floor((Math.random() * shockedEmoji.length))];
+
+}
+
 function divideInMultipleEmbed(arrays, length) {
     let embeds = [];
     if (arrays.length > length) {
@@ -67,4 +73,5 @@ export default {
     sendErrorEmbed,
     sadEmojiPicker,
     divideInMultipleEmbed,
+    shockedEmojiPicker,
 }
