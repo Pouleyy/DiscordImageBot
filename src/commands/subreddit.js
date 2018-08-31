@@ -3,6 +3,8 @@ import subCtrl from "../controllers/subreddit";
 import request from "request";
 import { RichEmbed } from "discord.js";
 import utils from "../utils/utils";
+import discord from "../server/discord";
+
 
 function get(command, args, message) {
     const sub = command;
@@ -35,7 +37,7 @@ function getMedia(sub, args, message, images, length) {
                 images = images.concat(imageURL);
             }
             if (images.length >= length) {
-                logger.info("Request subreddit for :", sub.name);
+                logger.info(`Request subreddit ${sub.name} ${utils.extractInfoFromMessage(message)}`);
                 message.channel.send(images.slice(0, length));
             } else {
                 getMedia(sub, args, message, images, length);
@@ -70,9 +72,11 @@ function search(args, message) {
     subCtrl.searchSubreddit(sub)
         .then(subs => {
             if (subs.length === 0) {
+                //utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
                 utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
+                logger.info(utils.sadEmojiPicker())
             } else {
-                logger.info(`Searched sub ${sub} ${subs.length} match found`);
+                logger.info(`Searched subreddit ${sub} ${subs.length} match found ${utils.extractInfoFromMessage(message)}`);
                 const subsWithOnlyName = utils.extractName(subs, "!");
                 const arrays = utils.divideInMultipleArrays(subsWithOnlyName, 30);
                 const embeds = utils.divideInMultipleEmbed(arrays, 18);
@@ -88,7 +92,7 @@ function search(args, message) {
 
 function info(args, message) {
     const sub = args[0];
-    logger.info("Info on :", sub);
+    logger.info(`Info on subreddit ${sub} ${utils.extractInfoFromMessage(message)}`);
     subCtrl.getSubreddit(sub)
         .then(subFound => {
             if (!subFound) {

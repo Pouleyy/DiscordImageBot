@@ -3,6 +3,7 @@ import logger from "../server/logger";
 import subreddit from "../commands/subreddit";
 import cat from "../commands/category";
 import { RichEmbed } from "discord.js";
+import utils from "../utils/utils";
 
 const prefix = "!";
 
@@ -31,7 +32,7 @@ discord.onMessageEverywhere(message => {
 });
 
 function help(message) {
-    logger.info("Help send");
+    logger.info(`Help requested ${utils.extractInfoFromMessage(message)}`);
     const username = discord.getUsername();
     const avatarURL = discord.getAvatarURL();
     const ID = discord.getID();

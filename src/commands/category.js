@@ -4,6 +4,7 @@ import { RichEmbed } from "discord.js";
 import utils from "../utils/utils";
 import puppeteer from 'puppeteer';
 import cheerio from 'cheerio';
+import discord from "../server/discord";
 
 //Set up browser at launch so it doesn't have to launch a new each time
 var browser = "";
@@ -71,7 +72,7 @@ function getMedia(page, nameCat, args, message, media, length) {
                 media = media.concat(urlFound);
             }
             if (media.length >= length) {
-                logger.info("Request category for : ", nameCat);
+                logger.info(`Request category for ${nameCat} ${utils.extractInfoFromMessage(message)}`);
                 media = media.map(url => {
                     if (url.includes("-thumb")) {
                         url = url.replace("-thumb.jpg", ".mp4");
@@ -97,7 +98,7 @@ function search(args, message) {
             if (cats.length === 0) {
                 utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}`);
             } else {
-                logger.info(`Searched category ${cat} ${cats.length} match found`);
+                logger.info(`Searched category ${cat} ${cats.length} match found ${utils.extractInfoFromMessage(message)}`);
                 const catsWithOnlyName = utils.extractName(cats, "!c ");
                 const array = utils.divideInMultipleArrays(catsWithOnlyName, 30);
                 const embed = new RichEmbed();
@@ -112,7 +113,7 @@ function search(args, message) {
 
 function info(args, message) {
     const cat = args[0];
-    logger.info("Info on :", cat);
+    logger.info(`Info on category ${cat} ${utils.extractInfoFromMessage(message)}`);
     catCtrl.getCategory(cat)
         .then(catFound => {
             if (!catFound) {
