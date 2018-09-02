@@ -12,6 +12,9 @@ discord.onMessageEverywhere(message => {
     if (message.content.indexOf(prefix) !== 0) {
         return;
     }
+    if (message.channel.type === "dm") {
+        return;
+    }
     const args = message.content.slice(prefix.length).trim().split(/ +/g).map(arg => arg.toLowerCase());
     const command = args.shift();
     if (command == "help") {
