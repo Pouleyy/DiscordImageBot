@@ -89,10 +89,9 @@ function getMedia(page, nameCat, args, message, media, length) {
                     } else {
                         message.channel.send(image);
                     }
-                }).then(buffer => {
-                    logger.debug(`Page ${nameCat} closed`);
-                    page.close();
                 })
+                logger.debug(`Page ${nameCat} closed`);
+                page.close();
             } else {
                 getMedia(page, nameCat, args, message, media, length);
             }
