@@ -67,8 +67,8 @@ function divideInMultipleEmbed(arrays, length) {
 }
 
 function extractInfoFromMessage(message) {
-    const test = `from ${message.member.user.username} in ${message.channel.name} in guild ${message.guild.name}`;
-    return test;
+    const info = `from ${message.member.user.username} in ${message.channel.name} in guild ${message.guild.name}`;
+    return info;
 }
 
 export default {
