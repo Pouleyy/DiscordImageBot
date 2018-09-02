@@ -46,6 +46,7 @@ function help(message) {
         .setColor('#' + (Math.random() * (1 << 24) | 0).toString(16))
         .setThumbnail(avatarURL)
         .setAuthor(username, avatarURL, "https://github.com/Pouleyy/DiscordImageBot")
+        .addField("If you have any trouble with the bot feel free to contact me, Pouley#7340", "\u200b")
         .addField("`!info subreddit`", "Get info about a subreddit\n**Usage**\n`!info winterporn` Give information about the *winterporn* subreddit")
         .addBlankField()
         .addField("`!s subreddit (gif|pic) (bomb)`", "Get for you pictures and gifs from this subreddit, you can ask gifs only with `gif` option or pictures only with `pic` option\n`bomb` option give you 5 pics/gifs\n**Usage**\n`!s winterporn pic bomb` Show you 5 pic from *winterporn* subreddit")
