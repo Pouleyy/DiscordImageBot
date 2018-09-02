@@ -17,7 +17,7 @@ discord.onMessageEverywhere(message => {
     }
     const args = message.content.slice(prefix.length).trim().split(/ +/g).map(arg => arg.toLowerCase());
     const command = args.shift();
-    logger.debug(command);
+    logger.debug(`${command} ${utils.extractInfoFromMessage(message)}`);
     if (command == "help") {
         help(message);
     } else if (command == "info") {
