@@ -11,7 +11,7 @@ function get(args, message) {
     return subCtrl.getSubreddit(sub)
         .then(subSearched => {
             if (!subSearched) {
-                utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
+                sub ? utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`) : utils.sendErrorEmbed(message, `You need to provide a subreddit so I can get gifs and pics for you ${utils.sadEmojiPicker()}`);
             } else {
                 let images = [];
                 if (message.channel.nsfw) {

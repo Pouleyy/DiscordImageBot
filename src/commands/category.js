@@ -27,7 +27,7 @@ function get(args, message) {
     catCtrl.getCategory(cat)
         .then(category => {
             if (!category) {
-                utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
+                cat ? utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`) : utils.sendErrorEmbed(message, `You need to provide a category so I can get gifs and pics for you ${utils.sadEmojiPicker()}`);
             } else {
                 const nameCat = category.name;
                 let media = [];
