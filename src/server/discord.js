@@ -126,7 +126,7 @@ function getID() {
  * @returns {String}
  */
 function getEmoji(id) {
-    return client.emojis.get(id)
+    return client.emojis.get(id);
 }
 
 /**

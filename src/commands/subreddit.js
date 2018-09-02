@@ -3,8 +3,6 @@ import subCtrl from "../controllers/subreddit";
 import request from "request";
 import { RichEmbed } from "discord.js";
 import utils from "../utils/utils";
-import discord from "../server/discord";
-
 
 function get(args, message) {
     const sub = args.shift();
@@ -74,7 +72,7 @@ function search(args, message) {
             if (subs.length === 0) {
                 //utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
                 utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
-                logger.info(utils.sadEmojiPicker())
+                logger.info(utils.sadEmojiPicker());
             } else {
                 logger.info(`Searched subreddit ${sub} ${subs.length} match found ${utils.extractInfoFromMessage(message)}`);
                 const subsWithOnlyName = utils.extractName(subs, "!");
@@ -83,7 +81,7 @@ function search(args, message) {
                 embeds.map((embed, index) => {
                     embed.setTitle(`Search ${index + 1}/${embeds.length} for subreddit : ${sub}`);
                     embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
-                    message.channel.send({ embed })
+                    message.channel.send({ embed });
                 });
             }
         })

@@ -2,19 +2,18 @@ import logger from "../server/logger";
 import catCtrl from "../controllers/category";
 import { RichEmbed } from "discord.js";
 import utils from "../utils/utils";
-import puppeteer from 'puppeteer';
-import cheerio from 'cheerio';
-import discord from "../server/discord";
+import puppeteer from "puppeteer";
+import cheerio from "cheerio";
 
 //Set up browser at launch so it doesn't have to launch a new each time
 var browser = "";
-puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] })
+puppeteer.launch({ args: ["--no-sandbox", "--disable-setuid-sandbox"] })
     .then(browzer => {
         browser = browzer;
         browser.newPage()
             .then(page => {
-                page.goto('https://scrolller.com/cute')
-                    .then(resp => page.click('#intro-settings > div > div > div > div:nth-child(3) > div:nth-child(2) > div'))
+                page.goto("https://scrolller.com/cute")
+                    .then(resp => page.click("#intro-settings > div > div > div > div:nth-child(3) > div:nth-child(2) > div"))
                     .then(resp => page.close());
             })
             .catch(err => logger.fatal(err));
@@ -48,19 +47,19 @@ function get(args, message) {
 }
 
 function getMedia(page, nameCat, args, message, media, length) {
-    const URL = `https://scrolller.com/${nameCat}`
+    const URL = `https://scrolller.com/${nameCat}`;
     page.goto(URL)
         .then(resp => page.setViewport({ width: 1000, height: 800 }))
         .then(resp => page.waitFor(2000))
         .then(resp => page.content())
         .then(content => {
             let $ = cheerio.load(content);
-            const urlFound = $('img').toArray().map(image => $(image).attr("src"));
+            const urlFound = $("img").toArray().map(image => $(image).attr("src"));
             if (urlFound.length <= 2) {
-                page.click('#intro-settings > div > div > div > div:nth-child(3) > div:nth-child(2) > div')
+                page.click("#intro-settings > div > div > div > div:nth-child(3) > div:nth-child(2) > div")
                     .then(resp => {
-                        getMedia(page, nameCat, args, message, media, length)
-                    })
+                        getMedia(page, nameCat, args, message, media, length);
+                    });
             }
             urlFound.pop();
             urlFound.shift();
@@ -78,11 +77,11 @@ function getMedia(page, nameCat, args, message, media, length) {
                         url = url.replace("-thumb.jpg", ".mp4");
                     }
                     return url;
-                })
+                });
                 message.channel.send(media.slice(0, length)).then(buffer => {
                     logger.debug(`Page ${nameCat} closed`);
-                    page.close()
-                })
+                    page.close();
+                });
             } else {
                 getMedia(page, nameCat, args, message, media, length);
             }
@@ -146,7 +145,7 @@ function info(args, message) {
                     const embeds = utils.divideInMultipleEmbed(subreddits, 18);
                     embeds.unshift(embed);
                     embeds.map((embed, index) => {
-                        if (index === 0) message.channel.send({ embed })
+                        if (index === 0) message.channel.send({ embed });
                         else {
                             embed.setTitle(`Subreddits ${index + 1}/${embeds.length} for ${catFound.name[0].toUpperCase() + catFound.name.slice(1)}`);
                             embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
@@ -164,4 +163,4 @@ export default {
     get,
     search,
     info,
-}
+};

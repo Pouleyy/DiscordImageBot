@@ -79,7 +79,7 @@ SubredditSchema.statics = {
                 sub.nbGifs = subToSave.nbGifs;
                 sub.nsfw = subToSave.nsfw;
                 return sub.save();
-            })
+            });
     },
 
     /**

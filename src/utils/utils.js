@@ -51,7 +51,7 @@ function divideInMultipleEmbed(arrays, length) {
                 if (index >= 21) {
                     return false;
                 } else {
-                    embed.addField("\u200b", array, true)
+                    embed.addField("\u200b", array, true);
                     return true;
                 }
             });
@@ -80,4 +80,4 @@ export default {
     divideInMultipleEmbed,
     shockedEmojiPicker,
     extractInfoFromMessage
-}
+};

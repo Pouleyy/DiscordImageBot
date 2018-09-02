@@ -63,7 +63,7 @@ CategorySchema.statics = {
                 cat.nbGifs = category.nbGifs;
                 cat.nsfw = category.nsfw;
                 return cat.save();
-            })
+            });
     },
 
     /**
