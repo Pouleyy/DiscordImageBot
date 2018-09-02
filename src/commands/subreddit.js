@@ -6,8 +6,8 @@ import utils from "../utils/utils";
 import discord from "../server/discord";
 
 
-function get(command, args, message) {
-    const sub = command;
+function get(args, message) {
+    const sub = args.shift();
     return subCtrl.getSubreddit(sub)
         .then(subSearched => {
             if (!subSearched) {

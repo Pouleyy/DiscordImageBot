@@ -29,8 +29,8 @@ discord.onMessageEverywhere(message => {
         cat.search(args, message);
     } else if (command == "c") {
         cat.get(args, message);
-    } else {
-        subreddit.get(command, args, message);
+    } else if (command == "s") {
+        subreddit.get(args, message);
     }
 });
 
