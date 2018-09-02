@@ -103,7 +103,7 @@ function search(args, message) {
                 const embed = new RichEmbed();
                 embed.setTitle("Search for category : " + cat);
                 array.map(s => embed.addField("\u200B", s, true));
-                embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
+                embed.setColor(utils.randomColor());
                 message.channel.send({ embed });
             }
         })
@@ -119,7 +119,7 @@ function info(args, message) {
                 utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
             } else {
                 const embed = new RichEmbed();
-                embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
+                embed.setColor(utils.randomColor());
                 embed.setTitle(catFound.name[0].toUpperCase() + catFound.name.slice(1));
                 embed.setURL(`https://scrolller.com/${catFound.name}`);
                 embed.setDescription(`This category is made of ${catFound.subreddits.length} subreddits`);
@@ -148,7 +148,7 @@ function info(args, message) {
                         if (index === 0) message.channel.send({ embed });
                         else {
                             embed.setTitle(`Subreddits ${index + 1}/${embeds.length} for ${catFound.name[0].toUpperCase() + catFound.name.slice(1)}`);
-                            embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
+                            embed.setColor(utils.randomColor());
                             message.channel.send({ embed });
                         }
                     });

@@ -44,7 +44,7 @@ function help(message) {
         .setTitle("Show you pictures and gifs from Reddit")
         .setURL("https://reddit.com")
         .setDescription("All the content is provided by [scrolller](https://scrolller.com/)\nSo you can't get content from all existent subreddit, use the `search` command to know which subreddit you can request\n")
-        .setColor("#" + (Math.random() * (1 << 24) | 0).toString(16))
+        .setColor(utils.randomColor())
         .setThumbnail(avatarURL)
         .setAuthor(username, avatarURL, "https://github.com/Pouleyy/DiscordImageBot")
         .addField("If you have any trouble with the bot feel free to contact me, Pouley#7340", "\u200b")

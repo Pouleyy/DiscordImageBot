@@ -80,7 +80,7 @@ function search(args, message) {
                 const embeds = utils.divideInMultipleEmbed(arrays, 18);
                 embeds.map((embed, index) => {
                     embed.setTitle(`Search ${index + 1}/${embeds.length} for subreddit : ${sub}`);
-                    embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
+                    embed.setColor(utils.randomColor());
                     message.channel.send({ embed });
                 });
             }
@@ -100,7 +100,7 @@ function info(args, message) {
                 makeRequest(subFound.name, function (imageURL) {
                     const thumbnail = !imageURL ? null : message.channel.nsfw ? imageURL.find(url => url.includes(".jpg")) : subFound.nsfw ? null : imageURL.find(url => url.includes(".jpg"));
                     const embed = new RichEmbed();
-                    embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));
+                    embed.setColor(utils.randomColor());
                     embed.setTitle(sub[0].toUpperCase() + sub.slice(1));
                     embed.setURL(`https://www.reddit.com/r/${sub}`);
                     embed.setDescription(subFound.title);
