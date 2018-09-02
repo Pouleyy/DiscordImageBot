@@ -75,7 +75,7 @@ function search(args, message) {
                 logger.info(utils.sadEmojiPicker());
             } else {
                 logger.info(`Searched subreddit ${sub} ${subs.length} match found ${utils.extractInfoFromMessage(message)}`);
-                const subsWithOnlyName = utils.extractName(subs, "!");
+                const subsWithOnlyName = utils.extractName(subs, "!s ");
                 const arrays = utils.divideInMultipleArrays(subsWithOnlyName, 30);
                 const embeds = utils.divideInMultipleEmbed(arrays, 18);
                 embeds.map((embed, index) => {
