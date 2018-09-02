@@ -78,10 +78,21 @@ function getMedia(page, nameCat, args, message, media, length) {
                     }
                     return url;
                 });
-                message.channel.send(media.slice(0, length)).then(buffer => {
+                //message.channel.send(
+                const randomColor = utils.randomColor();
+                media.slice(0, length).map(image => {
+                    if (image.includes(".jpg")) {
+                        const embed = new RichEmbed()
+                            .setColor(randomColor)
+                            .setImage(image);
+                        message.channel.send({ embed });
+                    } else {
+                        message.channel.send(image);
+                    }
+                }).then(buffer => {
                     logger.debug(`Page ${nameCat} closed`);
                     page.close();
-                });
+                })
             } else {
                 getMedia(page, nameCat, args, message, media, length);
             }

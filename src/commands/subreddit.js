@@ -36,7 +36,18 @@ function getMedia(sub, args, message, images, length) {
             }
             if (images.length >= length) {
                 logger.info(`Request ${length} subreddit ${sub.name} ${utils.extractInfoFromMessage(message)}`);
-                message.channel.send(images.slice(0, length));
+                //message.channel.send(images.slice(0, length));
+                const randomColor = utils.randomColor();
+                images.slice(0, length).map(image => {
+                    if (image.includes(".jpg")) {
+                        const embed = new RichEmbed()
+                            .setColor(randomColor)
+                            .setImage(image);
+                        message.channel.send({ embed });
+                    } else {
+                        message.channel.send(image);
+                    }
+                })
             } else {
                 getMedia(sub, args, message, images, length);
             }
