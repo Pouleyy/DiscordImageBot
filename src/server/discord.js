@@ -5,7 +5,7 @@ import DBL from "dblapi.js";
 import logger from "../server/logger";
 
 const client = new Discord.Client();
-const dbl = new DBL(config.DISCORD_BOTS_TOKEN, client);
+//const dbl = new DBL(config.DISCORD_BOTS_TOKEN, client);
 let startDate;
 
 /**
@@ -83,9 +83,9 @@ function sendOn(channel, message) {
 */
 client.on("ready", async () => {
     startDate = new Date();
-    client.user.setActivity("!help for help", { type: "WATCHING" });
+    client.user.setActivity("!help for help, now !s subreddit", { type: "WATCHING" });
     setInterval(() => {
-        dbl.postStats(client.guilds.size);
+        //dbl.postStats(client.guilds.size);
     }, 1800000);
 
 });
