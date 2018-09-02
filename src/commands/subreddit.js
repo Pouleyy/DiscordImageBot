@@ -37,7 +37,7 @@ function getMedia(sub, args, message, images, length) {
                 images = images.concat(imageURL);
             }
             if (images.length >= length) {
-                logger.info(`Request subreddit ${sub.name} ${utils.extractInfoFromMessage(message)}`);
+                logger.info(`Request ${length} subreddit ${sub.name} ${utils.extractInfoFromMessage(message)}`);
                 message.channel.send(images.slice(0, length));
             } else {
                 getMedia(sub, args, message, images, length);

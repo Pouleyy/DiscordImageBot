@@ -72,7 +72,7 @@ function getMedia(page, nameCat, args, message, media, length) {
                 media = media.concat(urlFound);
             }
             if (media.length >= length) {
-                logger.info(`Request category for ${nameCat} ${utils.extractInfoFromMessage(message)}`);
+                logger.info(`Request ${length} category for ${nameCat} ${utils.extractInfoFromMessage(message)}`);
                 media = media.map(url => {
                     if (url.includes("-thumb")) {
                         url = url.replace("-thumb.jpg", ".mp4");
