@@ -27,7 +27,7 @@ function get(args, message) {
     catCtrl.getCategory(cat)
         .then(category => {
             if (!category) {
-                utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
             } else {
                 const nameCat = category.name;
                 let media = [];
@@ -117,7 +117,7 @@ function info(args, message) {
     catCtrl.getCategory(cat)
         .then(catFound => {
             if (!catFound) {
-                utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
             } else {
                 const embed = new RichEmbed();
                 embed.setColor("#" + (Math.random() * (1 << 24) | 0).toString(16));

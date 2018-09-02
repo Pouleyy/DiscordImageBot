@@ -11,7 +11,7 @@ function get(args, message) {
     return subCtrl.getSubreddit(sub)
         .then(subSearched => {
             if (!subSearched) {
-                utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
             } else {
                 let images = [];
                 if (message.channel.nsfw) {
@@ -73,7 +73,7 @@ function search(args, message) {
         .then(subs => {
             if (subs.length === 0) {
                 //utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
-                utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
                 logger.info(utils.sadEmojiPicker())
             } else {
                 logger.info(`Searched subreddit ${sub} ${subs.length} match found ${utils.extractInfoFromMessage(message)}`);
