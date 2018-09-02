@@ -43,7 +43,7 @@ function help(message) {
     const embed = new RichEmbed()
         .setTitle("Show you pictures and gifs from Reddit")
         .setURL("https://reddit.com")
-        .setDescription("All the content is provided by [scrolller](https://scrolller.com/) \n")
+        .setDescription("All the content is provided by [scrolller](https://scrolller.com/)\nSo you can't get content from all existent subreddit, use the `search` command to know which subreddit you can request\n")
         .setColor('#' + (Math.random() * (1 << 24) | 0).toString(16))
         .setThumbnail(avatarURL)
         .setAuthor(username, avatarURL, "https://github.com/Pouleyy/DiscordImageBot")
@@ -61,6 +61,8 @@ function help(message) {
         .addField("`!c category (gif|pic) (bomb)`", "Get for you pictures and gifs from this category, you can ask gifs only with `gif` option or pictures only with `pic` option\n`bomb` option give you 5 pics/gifs\n**Usage**\n`!c cute gif` Show you a gif from the *cute* category")
         .addBlankField()
         .addField("`!searchc category`", "Search category by looking in the Okedan's database for categories that match your research \nYou can search all categories with `!searchc`\n**Usage**\n`!searchc a` Send you all the category that contains *a*")
-        .addField(`Invite ${username} to your server by clicking on this :`, `[Invitation link](https://discordapp.com/api/oauth2/authorize?client_id=${ID}&scope=bot&permissions=19456)`);
+        .addBlankField()
+        .addField(`Invite ${username} to your server`, `[Invitation link](https://discordapp.com/api/oauth2/authorize?client_id=${ID}&scope=bot&permissions=19456)`)
+        .addField(`You can vote from ${username} on discordbots.org`, `[Vote link](https://discordbots.org/bot/${ID}/vote)`);
     message.channel.send({ embed })
 }
