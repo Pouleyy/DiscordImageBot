@@ -48,7 +48,7 @@ function help(message) {
         .setAuthor(username, avatarURL, "https://github.com/Pouleyy/DiscordImageBot")
         .addField("`!info subreddit`", "Get info about a subreddit\n**Usage**\n`!info winterporn` Give information about the *winterporn* subreddit")
         .addBlankField()
-        .addField("`!subreddit (gif|pic) (bomb)`", "Get for you pictures and gifs from this subreddit, you can ask gifs only with `gif` option or pictures only with `pic` option\n`bomb` option give you 5 pics/gifs\n**Usage**\n`!winterporn pic bomb` Show you 5 pic from *winterporn* subreddit")
+        .addField("`!s subreddit (gif|pic) (bomb)`", "Get for you pictures and gifs from this subreddit, you can ask gifs only with `gif` option or pictures only with `pic` option\n`bomb` option give you 5 pics/gifs\n**Usage**\n`!s winterporn pic bomb` Show you 5 pic from *winterporn* subreddit")
         .addBlankField()
         .addField("`!search subreddit`", "Search subreddit by looking in the Okedan's database for subreddits that match your research\n**Usage**\n`!search imaginary` Send you all the subreddit that have *imaginary* in their name")
         .addBlankField()
