@@ -71,6 +71,10 @@ function extractInfoFromMessage(message) {
     return info;
 }
 
+function randomColor() {
+    return `# ${(Math.random() * (1 << 24) | 0).toString(16)}`
+}
+
 export default {
     arrayToString,
     divideInMultipleArrays,
@@ -79,5 +83,6 @@ export default {
     sadEmojiPicker,
     divideInMultipleEmbed,
     shockedEmojiPicker,
-    extractInfoFromMessage
+    extractInfoFromMessage,
+    randomColor,
 };
