@@ -104,6 +104,14 @@ client.on("error", error => {
 client.on("guildCreate", guild => {
     sendOnDefaultChannel(`I just joined "${guild.name}" server`);
 });
+
+/**
+ * Server left :( 
+ */
+client.on("guildDelete", guild => {
+    sendOnDefaultChannel(`I've been removed from "${guild.name}" server`)
+});
+
 /**
  * Get the bot avatar URL
  * @returns {String}
