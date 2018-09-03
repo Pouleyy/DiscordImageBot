@@ -82,6 +82,7 @@ function sendOn(channel, message) {
  * Set the game played by the bot
 */
 client.on("ready", async () => {
+    guildName();
     startDate = new Date();
     client.user.setActivity("!help for help, now !s subreddit", { type: "WATCHING" });
     setInterval(() => {
@@ -102,14 +103,14 @@ client.on("error", error => {
  * New server join :hype:
  */
 client.on("guildCreate", guild => {
-    sendOnDefaultChannel(`I just joined "${guild.name}" server`);
+    sendOnDefaultChannel(`I just joined "${guild.name}" server with ${guild.memberCount} users on it`);
 });
 
 /**
  * Server left :( 
  */
 client.on("guildDelete", guild => {
-    sendOnDefaultChannel(`I've been removed from "${guild.name}" server`)
+    sendOnDefaultChannel(`I've been removed from "${guild.name}" server with ${guild.memberCount} users on it`);
 });
 
 /**
@@ -148,8 +149,11 @@ function getEmoji(id) {
  * 
  */
 function guildName() {
-    const test = client.guilds;
-    logger.info(test.map(guild => guild.name));
+    const guilds = client.guilds;
+    sendOnDefaultChannel(`I'm on ${guilds.size} servers`);
+    guilds.map(guild => {
+        sendOnDefaultChannel(`I'm on ${guild.name} server with ${guild.memberCount} users on it`);
+    });
 }
 
 
