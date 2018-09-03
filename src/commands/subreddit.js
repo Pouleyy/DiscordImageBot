@@ -81,7 +81,7 @@ function search(args, message) {
     subCtrl.searchSubreddit(sub)
         .then(subs => {
             if (subs.length === 0) {
-                utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching subreddit to your search "${sub}", sorry ${utils.sadEmojiPicker()}`);
             } else {
                 logger.info(`Searched subreddit ${sub} ${subs.length} match found ${utils.extractInfoFromMessage(message)}`);
                 const subsWithOnlyName = utils.extractName(subs, "!s ");
@@ -103,7 +103,7 @@ function info(args, message) {
     subCtrl.getSubreddit(sub)
         .then(subFound => {
             if (!subFound) {
-                utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching subreddit for info on "${sub}", sorry ${utils.sadEmojiPicker()}`);
                 return;
             } else {
                 makeRequest(subFound.name, function (imageURL) {

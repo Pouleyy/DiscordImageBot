@@ -105,7 +105,7 @@ function search(args, message) {
     catCtrl.searchCategory(cat)
         .then(cats => {
             if (cats.length === 0) {
-                utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}`);
+                utils.sendErrorEmbed(message, `No matching category to your search "${cat}", sorry ${utils.sadEmojiPicker()}`);
             } else {
                 logger.info(`Searched category ${cat} ${cats.length} match found ${utils.extractInfoFromMessage(message)}`);
                 const catsWithOnlyName = utils.extractName(cats, "!c ");
@@ -126,7 +126,7 @@ function info(args, message) {
     catCtrl.getCategory(cat)
         .then(catFound => {
             if (!catFound) {
-                utils.sendErrorEmbed(message, `No matching category ${cat}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
+                utils.sendErrorEmbed(message, `No matching category for info on "${cat}", sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
             } else {
                 const embed = new RichEmbed();
                 embed.setColor(utils.randomColor());
