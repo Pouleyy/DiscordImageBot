@@ -97,6 +97,13 @@ client.on("error", error => {
     logger.error(error);
 });
 
+
+/**
+ * New server join :hype:
+ */
+client.on("guildCreate", guild => {
+    sendOnDefaultChannel(`I just joined ${guild.name} server`);
+});
 /**
  * Get the bot avatar URL
  * @returns {String}
