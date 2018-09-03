@@ -83,7 +83,6 @@ function search(args, message) {
             if (subs.length === 0) {
                 //utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}`);
                 utils.sendErrorEmbed(message, `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`);
-                logger.info(utils.sadEmojiPicker());
             } else {
                 logger.info(`Searched subreddit ${sub} ${subs.length} match found ${utils.extractInfoFromMessage(message)}`);
                 const subsWithOnlyName = utils.extractName(subs, "!s ");
