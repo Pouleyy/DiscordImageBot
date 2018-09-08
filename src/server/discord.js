@@ -68,7 +68,7 @@ function sendOnCmdChannel(message) {
  * @returns {Promise}
  */
 function sendOnDefaultChannel(message, color) {
-    const embed = new RichEmbed().setColor(color ? color : utils.randomColor()).addField(message, "\u200B");
+    const embed = new RichEmbed().setColor(color ? color : "#551A8B").addField(message, "\u200B");
     return client.channels.get(config.DISCORD_CHAN_ID).send({ embed });
 }
 
