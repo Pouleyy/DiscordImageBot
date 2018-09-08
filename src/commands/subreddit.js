@@ -35,8 +35,7 @@ function getMedia(sub, args, message, images, length) {
                 images = images.concat(imageURL);
             }
             if (images.length >= length) {
-                logger.info(`Request ${length} subreddit ${sub.name} ${utils.extractInfoFromMessage(message)}`);
-                //message.channel.send(images.slice(0, length));
+                utils.loggerDiscord(message, `Request ${length} subreddit ${sub.name}`);
                 const randomColor = utils.randomColor();
                 images.slice(0, length).map(image => {
                     if (image.includes(".jpg")) {
@@ -83,7 +82,7 @@ function search(args, message) {
             if (subs.length === 0) {
                 utils.sendErrorEmbed(message, `No matching subreddit to your search "${sub}", sorry ${utils.sadEmojiPicker()}`);
             } else {
-                logger.info(`Searched subreddit ${sub} ${subs.length} match found ${utils.extractInfoFromMessage(message)}`);
+                utils.loggerDiscord(message, `Searched subreddit ${sub} ${subs.length} match found`);
                 const subsWithOnlyName = utils.extractName(subs, "!s ");
                 const arrays = utils.divideInMultipleArrays(subsWithOnlyName, 30);
                 const embeds = utils.divideInMultipleEmbed(arrays, 18);
@@ -99,7 +98,7 @@ function search(args, message) {
 
 function info(args, message) {
     const sub = args[0];
-    logger.info(`Info on subreddit ${sub} ${utils.extractInfoFromMessage(message)}`);
+    utils.loggerDiscord(message, `Info on subreddit ${sub}`);
     subCtrl.getSubreddit(sub)
         .then(subFound => {
             if (!subFound) {

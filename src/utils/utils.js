@@ -1,5 +1,6 @@
 import { RichEmbed } from "discord.js";
 import logger from "../server/logger";
+import discord from "../server/discord";
 
 function arrayToString(array) {
     return array.reduce((prev, cur) => prev + ", " + cur);
@@ -26,8 +27,11 @@ function extractName(array, prefix) {
 }
 
 function sendErrorEmbed(message, messageError) {
-    logger.error(`Error from ${extractInfoFromMessage(message)} "${messageError}"`);
-    const embed = new RichEmbed().setColor(16711680).addField(messageError, "\u200B");
+    const textMsg = `Error from ${extractInfoFromMessage(message)} "${messageError}"`;
+    const color = "#ff0000";
+    discord.sendOnDefaultChannel(textMsg, color);
+    logger.error(textMsg);
+    const embed = new RichEmbed().setColor(color).addField(messageError, "\u200B");
     message.channel.send({ embed });
 }
 
@@ -75,6 +79,12 @@ function randomColor() {
     return `# ${(Math.random() * (1 << 24) | 0).toString(16)}`
 }
 
+function loggerDiscord(message, textMessage) {
+    textMessage = `${textMessage} ${extractInfoFromMessage(message)}`;
+    logger.info(textMessage);
+    discord.sendOnDefaultChannel(textMessage);
+}
+
 export default {
     arrayToString,
     divideInMultipleArrays,
@@ -85,4 +95,5 @@ export default {
     shockedEmojiPicker,
     extractInfoFromMessage,
     randomColor,
+    loggerDiscord,
 };

@@ -36,7 +36,7 @@ discord.onMessageEverywhere(message => {
 });
 
 function help(message) {
-    logger.info(`Help requested ${utils.extractInfoFromMessage(message)}`);
+    utils.loggerDiscord(message, `Help requested`);
     const username = discord.getUsername();
     const avatarURL = discord.getAvatarURL();
     const ID = discord.getID();

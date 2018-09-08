@@ -71,7 +71,7 @@ function getMedia(page, nameCat, args, message, media, length) {
                 media = media.concat(urlFound);
             }
             if (media.length >= length) {
-                logger.info(`Request ${length} category for ${nameCat} ${utils.extractInfoFromMessage(message)}`);
+                utils.loggerDiscord(message, `Request ${length} category for ${nameCat}`);
                 media = media.map(url => {
                     if (url.includes("-thumb")) {
                         url = url.replace("-thumb.jpg", ".mp4");
@@ -107,7 +107,7 @@ function search(args, message) {
             if (cats.length === 0) {
                 utils.sendErrorEmbed(message, `No matching category to your search "${cat}", sorry ${utils.sadEmojiPicker()}`);
             } else {
-                logger.info(`Searched category ${cat} ${cats.length} match found ${utils.extractInfoFromMessage(message)}`);
+                utils.loggerDiscord(message, `Searched category ${cat} ${cats.length} match found`);
                 const catsWithOnlyName = utils.extractName(cats, "!c ");
                 const array = utils.divideInMultipleArrays(catsWithOnlyName, 30);
                 const embed = new RichEmbed();
@@ -122,7 +122,7 @@ function search(args, message) {
 
 function info(args, message) {
     const cat = args[0];
-    logger.info(`Info on category ${cat} ${utils.extractInfoFromMessage(message)}`);
+    utils.loggerDiscord(message, `Info on category ${cat}`);
     catCtrl.getCategory(cat)
         .then(catFound => {
             if (!catFound) {
