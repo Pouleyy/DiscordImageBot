@@ -1,8 +1,10 @@
 import Discord from "discord.js";
 import config from "./config";
 import DBL from "dblapi.js";
+import { RichEmbed } from "discord.js";
 
 import logger from "../server/logger";
+import utils from "../utils/utils";
 
 const client = new Discord.Client();
 //const dbl = new DBL(config.DISCORD_BOTS_TOKEN, client);
@@ -62,10 +64,12 @@ function sendOnCmdChannel(message) {
 /**
  * Send message on default channel
  * @param {String} message
+ * @param {String} [color]
  * @returns {Promise}
  */
-function sendOnDefaultChannel(message) {
-    return client.channels.get(config.DISCORD_CHAN_ID).send(message);
+function sendOnDefaultChannel(message, color) {
+    const embed = new RichEmbed().setColor(color ? color : utils.randomColor()).addField(message, "\u200B");
+    return client.channels.get(config.DISCORD_CHAN_ID).send({ embed });
 }
 
 /**
@@ -103,14 +107,14 @@ client.on("error", error => {
  * New server join :hype:
  */
 client.on("guildCreate", guild => {
-    sendOnDefaultChannel(`I just joined "${guild.name}" server with ${guild.memberCount} users on it`);
+    sendOnDefaultChannel(`I just joined "${guild.name}" server with ${guild.memberCount} users on it`, "#00ff00");
 });
 
 /**
  * Server left :( 
  */
 client.on("guildDelete", guild => {
-    sendOnDefaultChannel(`I've been removed from "${guild.name}" server with ${guild.memberCount} users on it`);
+    sendOnDefaultChannel(`I've been removed from "${guild.name}" server with ${guild.memberCount} users on it`, "#ff0000");
 });
 
 /**
