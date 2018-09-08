@@ -42,8 +42,10 @@ function getMedia(sub, args, message, images, length) {
                         const embed = new RichEmbed()
                             .setColor(randomColor)
                             .setImage(image);
+                        if (length === 1) embed.setDescription(`You can use the **bomb** option to get more content\nTry *!s ${sub.name} bomb*`);
                         message.channel.send({ embed });
                     } else {
+                        if (length === 1) image = `You can use the **bomb** option to get more content\nTry *!s ${sub.name} bomb*\n${image}`
                         message.channel.send(image);
                     }
                 })
