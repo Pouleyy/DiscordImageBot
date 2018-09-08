@@ -2,7 +2,7 @@ import bunyan from "bunyan";
 import config from "./config";
 
 const logger = new bunyan.createLogger({
-    name: "ImageBaleine",
+    name: "Okedan",
     stream: process.stdout,
     level: config.LOG_LEVEL
 });
