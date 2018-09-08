@@ -9,7 +9,7 @@ services:
         environment:
             - NODE_ENV=production
             - LOG_LEVEL=info
-            - MONGO_URL=mongodb://mongo-dev:27017/baleinebot
+            - MONGO_URL=mongodb://mongo-dev:27017/okedan
             - DISCORD_TOKEN=${DISCORD_TOKEN}
             - DISCORD_CHAN_ID=${DISCORD_CHAN_ID}
             - DISCORD_BOTS_TOKEN=${DISCORD_BOTS_TOKEN}
