@@ -78,7 +78,6 @@ function getMedia(page, nameCat, args, message, media, length) {
                     }
                     return url;
                 });
-                //message.channel.send(
                 const randomColor = utils.randomColor();
                 media.slice(0, length).map(image => {
                     if (image.includes(".jpg")) {
