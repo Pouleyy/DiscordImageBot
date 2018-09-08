@@ -10,7 +10,7 @@ isMongoAlive()
         logger.info("Mongo is alive");
     })
     .then(() => {
-        logger.info("ImageBaleine is started");
+        logger.info("Okedan is started");
         return discord.clientLogin();
     })
     .then(() => {
