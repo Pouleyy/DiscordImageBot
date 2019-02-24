@@ -1,40 +1,40 @@
 version: "3"
-services: 
-    mongodb:
-        image: mongo:latest
-        volumes:
-            - mongo-data:/data/db
+services:
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
 
-    bot:
-        image: node:8
-        command: /bin/bash -c "./node_modules/.bin/nodemon --delay 2 --watch dist --inspect=0.0.0.0:5858 ./dist/server.js | ./node_modules/.bin/bunyan --color"
-        working_dir: /app
-        depends_on:
-            - mongodb
-        ports:
-            - 5858:5858
-        volumes:
-            - .:/app
-        environment:
-            - NODE_ENV=development
-            - LOG_LEVEL=trace
-            - MONGO_URL=mongodb://mongodb:27017/okedan
-            - DISCORD_TOKEN=${DISCORD_TOKEN}
-            - DISCORD_CHAN_ID=${DISCORD_CHAN_ID}
-            - DISCORD_BOTS_TOKEN=${DISCORD_BOTS_TOKEN}
+  bot:
+    image: node:latest
+    command: /bin/bash -c "./node_modules/.bin/nodemon --delay 2 --watch dist --inspect=0.0.0.0:5858 ./dist/server.js | ./node_modules/.bin/bunyan --color"
+    working_dir: /app
+    depends_on:
+      - mongodb
+    ports:
+      - 5858:5858
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=development
+      - LOG_LEVEL=trace
+      - MONGO_URL=mongodb://mongodb:27017/okedan
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - DISCORD_CHAN_ID=${DISCORD_CHAN_ID}
+      - DISCORD_BOTS_TOKEN=${DISCORD_BOTS_TOKEN}
 
-    # bot-test:
-    #     image: node:latest
-    #     command: /bin/bash -c "set -o pipefail && ./node_modules/.bin/nyc --reporter=html ./node_modules/.bin/mocha --colors --no-timeouts ./dist/tests/tests.js | ./node_modules/.bin/bunyan --color"
-    #     working_dir: /app
-    #     depends_on:
-    #         - mongodb
-    #     volumes:
-    #         - .:/app
-    #     environment:
-    #         - NODE_ENV=test
-    #         - LOG_LEVEL=debug
-    #         - MONGO_URL=mongodb://mongodb:27017/okedan
+  # bot-test:
+  #     image: node:latest
+  #     command: /bin/bash -c "set -o pipefail && ./node_modules/.bin/nyc --reporter=html ./node_modules/.bin/mocha --colors --no-timeouts ./dist/tests/tests.js | ./node_modules/.bin/bunyan --color"
+  #     working_dir: /app
+  #     depends_on:
+  #         - mongodb
+  #     volumes:
+  #         - .:/app
+  #     environment:
+  #         - NODE_ENV=test
+  #         - LOG_LEVEL=debug
+  #         - MONGO_URL=mongodb://mongodb:27017/okedan
 
 volumes:
-    mongo-data:
+  mongo-data:
