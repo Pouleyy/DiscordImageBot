@@ -4,6 +4,7 @@ import xml2js from "xml2js";
 import cheerio from "cheerio";
 import Subreddit from "../models/subreddit";
 import Category from "../models/category";
+import axios from "axios";
 
 /**
  * Retrieve all Data from scrolller.com
@@ -14,28 +15,22 @@ const retrieveAllData = () => {
   retrieveAllCat();
 };
 
-const retrieveAllSub = () => {
+const retrieveAllSub = async () => {
   const TARGET_URL = "https://scrolller.com/sitemap.xml";
-  request(
-    {
-      url: TARGET_URL
-    },
-    function(err, res, body) {
-      if (err || res.statusCode != 200) {
-        logger.error(err + " Sitemap got problem");
+  try {
+    const response = await axios.get(TARGET_URL);
+    let parser = new xml2js.Parser();
+    parser.parseString(response.data, function(err, allSubXML) {
+      if (err) {
+        logger.fatal("Error while parsing XML " + err);
       } else {
-        let parser = new xml2js.Parser();
-        parser.parseString(body, function(err, allSubXML) {
-          if (err) {
-            logger.fatal("Error while parsing XML " + err);
-          } else {
-            logger.info("Parse done");
-            getInfoAllSub(allSubXML);
-          }
-        });
+        logger.info("Parse done");
+        getInfoAllSub(allSubXML);
       }
-    }
-  );
+    });
+  } catch (err) {
+    logger.error(`${err} Sitemap got a problem`);
+  }
 };
 
 const getInfoAllSub = allSubJSON => {
@@ -50,12 +45,12 @@ const filterSub = obj => {
   );
 };
 
-const loop = allSub => {
-  const TIME_BETWEEN_REQUEST = 150;
+const loop = async allSub => {
+  const TIME_BETWEEN_REQUEST = 250;
   const INDEX_MAX = allSub.length;
   let index = 0;
   logger.info(INDEX_MAX + " subreddits to save");
-  let finish = setInterval(function() {
+  let finish = setInterval(async () => {
     if (index >= INDEX_MAX - 1) {
       logger.info(
         index +
@@ -69,30 +64,32 @@ const loop = allSub => {
     const subName = url.substring(24);
     //logger.info("Request N°" + index + "/" + INDEX_MAX);
     index++;
-    request(
-      {
-        url: url
-      },
-      function(err, res, body) {
-        if (err || res.statusCode != 200) {
-          logger.warn(subName + " " + err);
-        } else {
-          const $ = cheerio.load(body);
-          let textNode = $("head > script")
-            .map((i, x) => x.children[0])
-            .filter((i, x) => x && x.data.match(/window.scrolllerPageInfo/))
-            .get(0);
-          let sub = textNode.data.substring(37);
-          sub = sub.slice(0, -3);
-          sub = JSON.parse(sub);
-          saveOneSub(sub);
-        }
+    try {
+      const response = await axios.get(url);
+      const $ = cheerio.load(response.data);
+      let sub = extractSubData($);
+      saveOneSub(sub);
+    } catch (err) {
+      logger.warn(`${subName} ${err}`);
+      if (err.response.status == 404) {
+        removeDeletedSubreddit(subName);
       }
-    );
+    }
   }, TIME_BETWEEN_REQUEST);
 };
 
-const saveOneSub = sub => {
+const extractSubData = $ => {
+  let textNode = $("head > script")
+    .map((i, x) => x.children[0])
+    .filter((i, x) => x && x.data.match(/window.scrolllerPageInfo/))
+    .get(0);
+  let sub = textNode.data.substring(37);
+  sub = sub.slice(0, -3);
+  sub = JSON.parse(sub);
+  return sub;
+};
+
+const saveOneSub = async sub => {
   let subToSave = {
     id: sub[0][1],
     name: sub[0][0].toLowerCase(),
@@ -108,57 +105,63 @@ const saveOneSub = sub => {
     nbGifs: sub[0][10][1],
     nsfw: sub[0][2]
   };
-  Subreddit.createOrUpdate(subToSave)
-    .then(subSaved => {
-      //logger.info("SUBREDDIT: " + subSaved.name + " saved");
-    })
-    .catch(err => logger.error(subToSave.name + " " + err));
+  try {
+    const subSaved = await Subreddit.createOrUpdate(subToSave);
+    //logger.info(`SUBREDDIT: ${subSaved.name} saved`);
+  } catch (err) {
+    logger.error(`Error while saving ${subToSave.name} : ${err}`);
+  }
 };
 
-const retrieveAllCat = () => {
+const removeDeletedSubreddit = async subName => {
+  logger.warn(`${subName} will be remove from the database due to 404`);
+  try {
+    await Category.remove(subName);
+    logger.info(`${subName} removed`);
+  } catch (err) {
+    logger.error(err);
+  }
+};
+
+const retrieveAllCat = async () => {
   const TARGET_URL =
     "https://scrolller.com/database/category-database.c5e089db1aab264c520f63ead1285c4f.js";
-  request(
-    {
-      url: TARGET_URL
-    },
-    function(err, res, body) {
-      if (err || res.statusCode != 200) {
-        logger.error(err + " Category database got problem");
-      } else {
-        body = body.substring(81, body.length - 1);
-        body = JSON.parse(body);
-        let categories = [];
-        body.map(category => {
-          let cat = {
-            id: category[1],
-            name: category[2],
+  try {
+    const response = await axios.get(TARGET_URL);
+    let data = response.data;
+    data = data.substring(81, data.length - 1);
+    data = JSON.parse(data);
+    let categories = [];
+    data.map(category => {
+      let cat = {
+        id: category[1],
+        name: category[2],
+        subreddits: []
+      };
+      category[3].map(sub => {
+        if (sub[0] != 0) {
+          cat.subreddits.push({ name: sub[2], id: sub[1] });
+        } else {
+          let subcat = {
+            id: sub[1],
+            name: sub[2],
             subreddits: []
           };
-          category[3].map(sub => {
-            if (sub[0] != 0) {
-              cat.subreddits.push({ name: sub[2], id: sub[1] });
-            } else {
-              let subcat = {
-                id: sub[1],
-                name: sub[2],
-                subreddits: []
-              };
-              sub[3].map(subsub => {
-                if (subsub[0] != 0) {
-                  cat.subreddits.push({ name: subsub[2], id: subsub[1] });
-                  subcat.subreddits.push({ name: subsub[2], id: subsub[1] });
-                }
-              });
-              categories.push(subcat);
+          sub[3].map(subsub => {
+            if (subsub[0] != 0) {
+              cat.subreddits.push({ name: subsub[2], id: subsub[1] });
+              subcat.subreddits.push({ name: subsub[2], id: subsub[1] });
             }
           });
-          categories.push(cat);
-        });
-        getInfoCat(categories);
-      }
-    }
-  );
+          categories.push(subcat);
+        }
+      });
+      categories.push(cat);
+    });
+    getInfoCat(categories);
+  } catch (err) {
+    logger.error(err + " Category database got problem");
+  }
 };
 
 const getInfoCat = categories => {
@@ -166,7 +169,7 @@ const getInfoCat = categories => {
   const INDEX_MAX = categories.length;
   let index = 0;
   logger.info(INDEX_MAX + " category to save");
-  let finish = setInterval(function() {
+  let finish = setInterval(async () => {
     if (index >= INDEX_MAX - 1) {
       logger.info(
         index +
@@ -178,36 +181,23 @@ const getInfoCat = categories => {
     }
     const catName = categories[index].name;
     const url = "https://scrolller.com/" + catName;
-    //logger.info("Request N°" + index + "/" + INDEX_MAX);
     const category = categories[index];
     index++;
-    request(
-      {
-        url: url
-      },
-      function(err, res, body) {
-        if (err || res.statusCode != 200) {
-          logger.warn(catName + " " + err);
-          logger.warn(catName + " " + body);
-        } else {
-          const $ = cheerio.load(body);
-          let textNode = $("head > script")
-            .map((i, x) => x.children[0])
-            .filter((i, x) => x && x.data.match(/window.scrolllerPageInfo/))
-            .get(0);
-
-          let json = textNode.data.substring(42);
-          json = json.slice(0, -17);
-
-          json = JSON.parse(json);
-          saveOneCat(category, json);
-        }
+    try {
+      const response = await axios.get(url);
+      const $ = cheerio.load(response.data);
+      let json = extractCategoryData($);
+      saveOneCat(category, json);
+    } catch (err) {
+      logger.warn(`${catName} ${err}`);
+      if (err.response.status == 404) {
+        removeDeletedCategory(catName);
       }
-    );
+    }
   }, TIME_BETWEEN_REQUEST);
 };
 
-const saveOneCat = (category, info) => {
+const saveOneCat = async (category, info) => {
   let catToSave = {
     id: category.id,
     name: category.name,
@@ -217,11 +207,33 @@ const saveOneCat = (category, info) => {
     nbGifs: info[0][7][1],
     nsfw: info[0][2]
   };
-  Category.createOrUpdate(catToSave)
-    .then(catSaved => {
-      //logger.info("CATEGORY: " + catSaved.name + " saved");
-    })
-    .catch(err => logger.error(catToSave.name + " " + err));
+  try {
+    const catSaved = await Category.createOrUpdate(catToSave);
+    logger.info("CATEGORY: " + catSaved.name + " saved");
+  } catch (err) {
+    logger.error(`Error while saving ${catToSave} : ${err}`);
+  }
+};
+
+const removeDeletedCategory = async catName => {
+  logger.warn(`${catName} will be remove from the database due to 404`);
+  try {
+    await Category.remove(catName);
+    logger.info(`${catName} removed`);
+  } catch (err) {
+    logger.error(err);
+  }
+};
+
+const extractCategoryData = $ => {
+  let textNode = $("head > script")
+    .map((i, x) => x.children[0])
+    .filter((i, x) => x && x.data.match(/window.scrolllerPageInfo/))
+    .get(0);
+  let json = textNode.data.substring(42);
+  json = json.slice(0, -17);
+  json = JSON.parse(json);
+  return json;
 };
 
 export default {
