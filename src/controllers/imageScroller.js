@@ -107,7 +107,7 @@ const saveOneSub = async sub => {
   };
   try {
     const subSaved = await Subreddit.createOrUpdate(subToSave);
-    //logger.info(`SUBREDDIT: ${subSaved.name} saved`);
+    logger.info(`SUBREDDIT: ${subSaved.name} saved`);
   } catch (err) {
     logger.error(`Error while saving ${subToSave.name} : ${err}`);
   }
