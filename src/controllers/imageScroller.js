@@ -1,5 +1,4 @@
 import logger from "../server/logger";
-import request from "request";
 import xml2js from "xml2js";
 import cheerio from "cheerio";
 import Subreddit from "../models/subreddit";

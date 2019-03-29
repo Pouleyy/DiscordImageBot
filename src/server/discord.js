@@ -8,7 +8,6 @@ import utils from "../utils/utils";
 
 const client = new Discord.Client();
 const dbl = new DBL(config.DISCORD_BOTS_TOKEN, client);
-let startDate;
 
 /**
  * Login Discord Bot
