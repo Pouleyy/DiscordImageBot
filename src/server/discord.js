@@ -15,41 +15,41 @@ let startDate;
  * @returns {Promise}
  */
 function clientLogin() {
-    return client.login(config.DISCORD_TOKEN);
+  return client.login(config.DISCORD_TOKEN);
 }
 
 /**
  * Register message listener on DISCORD_CMD_CHAN_ID
- * @param {Function} callback 
+ * @param {Function} callback
  */
 function onCmdChannelMessage(callback) {
-    client.on("message", message => {
-        if (message.channel.id === config.DISCORD_CMD_CHAN_ID) {
-            callback(message);
-        }
-    });
+  client.on("message", message => {
+    if (message.channel.id === config.DISCORD_CMD_CHAN_ID) {
+      callback(message);
+    }
+  });
 }
 
 /**
  * Register message listener on DISCORD_CHAN_ID
- * @param {Function} callback 
+ * @param {Function} callback
  */
 function onDefaultChannelMessage(callback) {
-    client.on("message", message => {
-        if (message.channel.id === config.DISCORD_CHAN_ID) {
-            callback(message);
-        }
-    });
+  client.on("message", message => {
+    if (message.channel.id === config.DISCORD_CHAN_ID) {
+      callback(message);
+    }
+  });
 }
 
 /**
  * Register message listener on every channels
- * @param {Function} callback 
+ * @param {Function} callback
  */
 function onMessageEverywhere(callback) {
-    client.on("message", message => {
-        callback(message);
-    });
+  client.on("message", message => {
+    callback(message);
+  });
 }
 
 /**
@@ -58,7 +58,7 @@ function onMessageEverywhere(callback) {
  * @returns {Promise}
  */
 function sendOnCmdChannel(message) {
-    return client.channels.get(config.DISCORD_CMD_CHAN_ID).send(message);
+  return client.channels.get(config.DISCORD_CMD_CHAN_ID).send(message);
 }
 
 /**
@@ -68,8 +68,10 @@ function sendOnCmdChannel(message) {
  * @returns {Promise}
  */
 function sendOnDefaultChannel(message, color) {
-    const embed = new RichEmbed().setColor(color ? color : "#551A8B").addField(message, "\u200B");
-    return client.channels.get(config.DISCORD_CHAN_ID).send({ embed });
+  const embed = new RichEmbed()
+    .setColor(color ? color : "#551A8B")
+    .addField(message, "\u200B");
+  return client.channels.get(config.DISCORD_CHAN_ID).send({ embed });
 }
 
 /**
@@ -79,42 +81,50 @@ function sendOnDefaultChannel(message, color) {
  * @returns {Promise}
  */
 function sendOn(channel, message) {
-    return channel.send(message);
+  return channel.send(message);
 }
 
 /**
  * Set the game played by the bot
-*/
+ */
 client.on("ready", async () => {
-    guildName();
-    startDate = new Date();
-    client.user.setActivity("!help for help, now !s subreddit", { type: "WATCHING" });
-    setInterval(() => {
-        //dbl.postStats(client.guilds.size);
-    }, 1800000);
-
+  guildName();
+  startDate = new Date();
+  client.user.setActivity("!help for help", { type: "WATCHING" });
+  setInterval(() => {
+    dbl.postStats(client.guilds.size);
+  }, 1800000);
 });
 
 /**
- * Handle on error event 
+ * Handle on error event
  */
 client.on("error", error => {
-    logger.error(error);
+  logger.error(error);
 });
-
 
 /**
  * New server join :hype:
  */
 client.on("guildCreate", guild => {
-    sendOnDefaultChannel(`I just joined "${guild.name}" server with ${guild.memberCount} users on it`, "#00ff00");
+  sendOnDefaultChannel(
+    `I just joined "${guild.name}" server with ${
+      guild.memberCount
+    } users on it`,
+    "#00ff00"
+  );
 });
 
 /**
- * Server left :( 
+ * Server left :(
  */
 client.on("guildDelete", guild => {
-    sendOnDefaultChannel(`I've been removed from "${guild.name}" server with ${guild.memberCount} users on it`, "#ff0000");
+  sendOnDefaultChannel(
+    `I've been removed from "${guild.name}" server with ${
+      guild.memberCount
+    } users on it`,
+    "#ff0000"
+  );
 });
 
 /**
@@ -122,7 +132,7 @@ client.on("guildDelete", guild => {
  * @returns {String}
  */
 function getAvatarURL() {
-    return client.user.avatarURL;
+  return client.user.avatarURL;
 }
 
 /**
@@ -130,7 +140,7 @@ function getAvatarURL() {
  * @returns {String}
  */
 function getUsername() {
-    return client.user.username;
+  return client.user.username;
 }
 
 /**
@@ -138,7 +148,7 @@ function getUsername() {
  * @returns {Number}
  */
 function getID() {
-    return client.user.id;
+  return client.user.id;
 }
 
 /**
@@ -146,34 +156,34 @@ function getID() {
  * @returns {String}
  */
 function getEmoji(id) {
-    return client.emojis.get(id);
+  return client.emojis.get(id);
 }
 
 /**
- * 
+ *
  */
 function guildName() {
-    const guilds = client.guilds;
-    sendOnDefaultChannel(`I'm on ${guilds.size} servers`);
-    guilds.map(guild => {
-        sendOnDefaultChannel(`I'm on ${guild.name} server with ${guild.memberCount} users on it`);
-    });
+  const guilds = client.guilds;
+  sendOnDefaultChannel(`I'm on ${guilds.size} servers`);
+  guilds.map(guild => {
+    sendOnDefaultChannel(
+      `I'm on ${guild.name} server with ${guild.memberCount} users on it`
+    );
+  });
 }
 
-
-
 export default {
-    client,
-    clientLogin,
-    onCmdChannelMessage,
-    onDefaultChannelMessage,
-    onMessageEverywhere,
-    sendOnCmdChannel,
-    sendOnDefaultChannel,
-    sendOn,
-    getAvatarURL,
-    getUsername,
-    getID,
-    guildName,
-    getEmoji,
+  client,
+  clientLogin,
+  onCmdChannelMessage,
+  onDefaultChannelMessage,
+  onMessageEverywhere,
+  sendOnCmdChannel,
+  sendOnDefaultChannel,
+  sendOn,
+  getAvatarURL,
+  getUsername,
+  getID,
+  guildName,
+  getEmoji
 };
