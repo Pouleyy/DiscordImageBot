@@ -4,41 +4,41 @@ import { RichEmbed } from "discord.js";
 import utils from "../utils/utils";
 import axios from "axios";
 
-function get(args, message) {
+const get = async (args, message) => {
   const sub = args.shift();
-  return subCtrl
-    .getSubreddit(sub)
-    .then(subSearched => {
-      if (!subSearched) {
-        sub
+  try {
+    const subSearched = await subCtrl.getSubreddit(sub);
+    if (!subSearched) {
+      sub
+        ? utils.sendErrorEmbed(
+            message,
+            `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`
+          )
+        : utils.sendErrorEmbed(
+            message,
+            `You need to provide a subreddit so I can get gifs and pics for you ${utils.sadEmojiPicker()}`
+          );
+    } else {
+      let images = [];
+      if (message.channel.nsfw) {
+        args.includes("bomb")
+          ? getMedia(subSearched, args, message, images, 5)
+          : getMedia(subSearched, args, message, images, 1);
+      } else {
+        subSearched.nsfw
           ? utils.sendErrorEmbed(
               message,
-              `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`
+              `Sorry it seems that you're in a SFW channel and you request a NSFW subreddit ${utils.sadEmojiPicker()}`
             )
-          : utils.sendErrorEmbed(
-              message,
-              `You need to provide a subreddit so I can get gifs and pics for you ${utils.sadEmojiPicker()}`
-            );
-      } else {
-        let images = [];
-        if (message.channel.nsfw) {
-          args.includes("bomb")
-            ? getMedia(subSearched, args, message, images, 5)
-            : getMedia(subSearched, args, message, images, 1);
-        } else {
-          subSearched.nsfw
-            ? utils.sendErrorEmbed(
-                message,
-                `Sorry it seems that you're in a SFW channel and you request a NSFW subreddit ${utils.sadEmojiPicker()}`
-              )
-            : args.includes("bomb")
-            ? getMedia(subSearched, args, message, images, 5)
-            : getMedia(subSearched, args, message, images, 1);
-        }
+          : args.includes("bomb")
+          ? getMedia(subSearched, args, message, images, 5)
+          : getMedia(subSearched, args, message, images, 1);
       }
-    })
-    .catch(err => logger.error(err));
-}
+    }
+  } catch (error) {
+    logger.error(error);
+  }
+};
 
 const getMedia = async (sub, args, message, images, length) => {
   try {
@@ -89,7 +89,11 @@ const sendContent = async (images, length, message, sub) => {
         image = `You can use the **bomb** option to get more content\nTry *!s ${
           sub.name
         } bomb*\n${image}`;
-      message.channel.send(image);
+      try {
+        message.channel.send(image);
+      } catch (error) {
+        logger.error(`Error while sending content for sub ${sub} : ${error}`);
+      }
     }
   });
 };
@@ -128,7 +132,13 @@ const search = async (args, message) => {
           `Search ${index + 1}/${embeds.length} for subreddit : ${sub}`
         );
         embed.setColor(utils.randomColor());
-        message.channel.send({ embed });
+        try {
+          message.channel.send({ embed });
+        } catch (error) {
+          logger.error(
+            `Error while sending searched content for sub ${sub} : ${error}`
+          );
+        }
       });
     }
   } catch (error) {
@@ -200,7 +210,13 @@ const info = async (args, message) => {
           true
         );
 
-        message.channel.send({ embed });
+        try {
+          message.channel.send({ embed });
+        } catch (error) {
+          logger.error(
+            `Error while sending searched content for sub ${sub} : ${error}`
+          );
+        }
       } catch (error) {
         logger.error(
           `Problem while requesting thumbnail for sub ${sub}`,
