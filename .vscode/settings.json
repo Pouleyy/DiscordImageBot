@@ -2,9 +2,7 @@
 {
   "editor.tabSize": 4,
   "editor.insertSpaces": true,
-  "editor.rulers": [
-    100
-  ],
+  "editor.rulers": [100],
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -19,13 +17,7 @@
   "vsicons.presets.angular": false,
   "beautify.onSave": true,
   "editor.formatOnSave": true,
-  // You can auto formate any files based on extensions type. 
-  "beautify.JSfiles": [
-    "js",
-    "json",
-    "jsbeautifyrc",
-    "jshintrc",
-    "ts"
-  ],
-  "eslint.enable": false
+  // You can auto formate any files based on extensions type.
+  "beautify.JSfiles": ["js", "json", "jsbeautifyrc", "jshintrc", "ts"],
+  "eslint.enable": true
 }
