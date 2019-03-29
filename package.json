@@ -1,6 +1,6 @@
 {
   "name": "DiscordImageBot",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Image Bot for Discord",
   "main": "dist/server.js",
   "repository": "https://github.com/Pouleyy/DiscordImageBot",
