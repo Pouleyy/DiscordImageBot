@@ -98,7 +98,12 @@ client.on("ready", async () => {
  * Handle on error event
  */
 client.on("error", error => {
-  logger.error(error);
+  try {
+    logger.error(error);
+    sendOnDefaultChannel(error);
+  } catch (err) {
+    logger.info(err);
+  }
 });
 
 /**
