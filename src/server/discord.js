@@ -88,7 +88,6 @@ function sendOn(channel, message) {
  */
 client.on("ready", async () => {
   guildName();
-  startDate = new Date();
   client.user.setActivity("!help for help", { type: "WATCHING" });
   setInterval(() => {
     dbl.postStats(client.guilds.size);
