@@ -90,7 +90,7 @@ const help = message => {
     .addBlankField()
     .addField(
       "`!c [category] (gif|pic) (bomb)`",
-      "Get for you pictures and gifs from this category, you can ask gifs only with `gif` option or pictures only with `pic` option\n`bomb` option give you 5 pics/gifs\n**Usage**\n`!c cute gif` Show you a gif from the *cute* category"
+      "⚠️ This feature has some trouble at this time, sorry for that, there is no way to fix for the moment\nGet for you pictures and gifs from this category, you can ask gifs only with `gif` option or pictures only with `pic` option\n`bomb` option give you 5 pics/gifs\n**Usage**\n`!c cute gif` Show you a gif from the *cute* category"
     )
     .addBlankField()
     .addField(
