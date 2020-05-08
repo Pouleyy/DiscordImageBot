@@ -230,7 +230,6 @@ const info = async (args, message) => {
 };
 
 const random = async (args, message) => {
-  logger.info("Tututu");
   try {
     const randomSubs = await subCtrl.getRandomSubreddit();
     const randomSub = randomSubs.shift();
@@ -240,8 +239,6 @@ const random = async (args, message) => {
         `Something went wrong while getting you a random pics, sorry ${utils.sadEmojiPicker()}`
       );
     } else {
-      logger.info("SUB RANDOM");
-      logger.info(randomSub);
       let images = [];
       if (message.channel.nsfw) {
         args.includes("bomb")
