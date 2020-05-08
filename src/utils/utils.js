@@ -28,7 +28,7 @@ const extractName = (array, prefix) => {
 };
 
 const sendErrorEmbed = async (message, messageError) => {
-  const textMsg = `Error from ${extractInfoFromMessage(
+  const textMsg = `Error ${extractInfoFromMessage(
     message
   )} "${messageError}"`;
   const color = "#ff0000";
@@ -81,7 +81,7 @@ const divideInMultipleEmbed = (arrays, length) => {
 const extractInfoFromMessage = message => {
   const info = `from ${message.member.user.username} in ${
     message.channel.name
-  } in guild ${message.guild.name}`;
+    } in guild ${message.guild.name}`;
   return info;
 };
 
