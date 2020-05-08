@@ -11,13 +11,13 @@ const get = async (args, message) => {
     if (!subSearched) {
       sub
         ? utils.sendErrorEmbed(
-            message,
-            `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`
-          )
+          message,
+          `No matching subreddit ${sub}, sorry ${utils.sadEmojiPicker()}\nDon't forget to use the search command if you're not sure`
+        )
         : utils.sendErrorEmbed(
-            message,
-            `You need to provide a subreddit so I can get gifs and pics for you ${utils.sadEmojiPicker()}`
-          );
+          message,
+          `You need to provide a subreddit so I can get gifs and pics for you ${utils.sadEmojiPicker()}`
+        );
     } else {
       let images = [];
       if (message.channel.nsfw) {
@@ -27,12 +27,12 @@ const get = async (args, message) => {
       } else {
         subSearched.nsfw
           ? utils.sendErrorEmbed(
-              message,
-              `Sorry it seems that you're in a SFW channel and you request a NSFW subreddit ${utils.sadEmojiPicker()}`
-            )
+            message,
+            `Sorry it seems that you're in a SFW channel and you request a NSFW subreddit ${utils.sadEmojiPicker()}`
+          )
           : args.includes("bomb")
-          ? getMedia(subSearched, args, message, images, 5)
-          : getMedia(subSearched, args, message, images, 1);
+            ? getMedia(subSearched, args, message, images, 5)
+            : getMedia(subSearched, args, message, images, 1);
       }
     }
   } catch (error) {
@@ -80,7 +80,7 @@ const sendContent = async (images, length, message, sub) => {
       if (length === 1)
         embed.setDescription(
           `You can use the **bomb** option to get more content\nTry *!s ${
-            sub.name
+          sub.name
           } bomb*`
         );
       message.channel.send({ embed });
@@ -88,7 +88,7 @@ const sendContent = async (images, length, message, sub) => {
       if (length === 1)
         image = `You can use the **bomb** option to get more content\nTry *!s ${
           sub.name
-        } bomb*\n${image}`;
+          } bomb*\n${image}`;
       try {
         message.channel.send(image);
       } catch (error) {
@@ -162,10 +162,10 @@ const info = async (args, message) => {
         const thumbnail = !url
           ? null
           : message.channel.nsfw
-          ? url.find(url => url.includes(".jpg"))
-          : subFound.nsfw
-          ? null
-          : url.find(url => url.includes(".jpg"));
+            ? url.find(url => url.includes(".jpg"))
+            : subFound.nsfw
+              ? null
+              : url.find(url => url.includes(".jpg"));
         const embed = new RichEmbed();
         embed.setColor(utils.randomColor());
         embed.setTitle(sub[0].toUpperCase() + sub.slice(1));
@@ -229,8 +229,43 @@ const info = async (args, message) => {
   }
 };
 
+const random = async (args, message) => {
+  logger.info("Tututu");
+  try {
+    const randomSubs = await subCtrl.getRandomSubreddit();
+    const randomSub = randomSubs.shift();
+    if (!randomSub) {
+      utils.sendErrorEmbed(
+        message,
+        `Something went wrong while getting you a random pics, sorry ${utils.sadEmojiPicker()}`
+      );
+    } else {
+      logger.info("SUB RANDOM");
+      logger.info(randomSub);
+      let images = [];
+      if (message.channel.nsfw) {
+        args.includes("bomb")
+          ? getMedia(randomSub, args, message, images, 5)
+          : getMedia(randomSub, args, message, images, 1);
+      } else {
+        randomSub.nsfw
+          ? utils.sendErrorEmbed(
+            message,
+            `Sorry it seems that you're in a SFW channel and you request a NSFW subreddit ${utils.sadEmojiPicker()}`
+          )
+          : args.includes("bomb")
+            ? getMedia(randomSub, args, message, images, 5)
+            : getMedia(randomSub, args, message, images, 1);
+      }
+    }
+  } catch (error) {
+    logger.error(error);
+  }
+};
+
 export default {
   get,
   search,
-  info
+  info,
+  random,
 };

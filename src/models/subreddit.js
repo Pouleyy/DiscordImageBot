@@ -126,6 +126,14 @@ SubredditSchema.statics = {
     return this.find({
       name: { $regex: subName, $options: "i" }
     }).select({ name: 1, _id: 0 });
+  },
+
+  /**
+   * Get a random Subreddit
+   * @returns {Promise}
+   */
+  random() {
+    return this.aggregate([{ $sample: { size: 1 } }]);
   }
 };
 

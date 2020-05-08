@@ -18,7 +18,16 @@ const searchSubreddit = subreddit => {
   return Subreddit.search(subreddit);
 };
 
+/**
+ * 
+ * @returns {Promise}
+ */
+const getRandomSubreddit = () => {
+  return Subreddit.random();
+};
+
 export default {
   getSubreddit,
-  searchSubreddit
+  searchSubreddit,
+  getRandomSubreddit
 };

@@ -36,6 +36,8 @@ discord.onMessageEverywhere(message => {
     cat.get(args, message);
   } else if (command == "s") {
     subreddit.get(args, message);
+  } else if (command == "random") {
+    subreddit.random(args, message);
   }
 });
 
