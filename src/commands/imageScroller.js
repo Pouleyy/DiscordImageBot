@@ -64,6 +64,11 @@ const help = message => {
       "\u200b"
     )
     .addField(
+      "`!random (gif|pic) (bomb)`",
+      "Get you pictures and gifs from a random subreddit, you can ask gifs only with `gif` option or pictures only with `pic` option\n`bomb` option give you 5 pics/gifs\n**Usage**\n`!random` Show you 5 pic from a *random* subreddit"
+    )
+    .addBlankField()
+    .addField(
       "`!s [subreddit] (gif|pic) (bomb)`",
       "Get for you pictures and gifs from this subreddit, you can ask gifs only with `gif` option or pictures only with `pic` option\n`bomb` option give you 5 pics/gifs\n**Usage**\n`!s winterporn pic bomb` Show you 5 pic from *winterporn* subreddit"
     )
