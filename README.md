@@ -1,5 +1,6 @@
 # Discord Bot for Image from Reddit.com
 
+[![Run on Repl.it](https://repl.it/badge/github/Pouleyy/DiscordImageBot)](https://repl.it/github/Pouleyy/DiscordImageBot)
 ## Features
 - Send image from scrolller.com
 
