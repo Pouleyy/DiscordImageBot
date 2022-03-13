@@ -1,20 +1,22 @@
 {
-    "version": "0.1.0",
-    "isShellCommand": true,
+    "version": "2.0.0",
     "command": "bash",
     "args": [
         "-c"
     ],
-    "showOutput": "always",
-    "suppressTaskName": true,
     "tasks": [
         {
-            "taskName": "build",
+            "label": "build",
+            "type": "shell",
             "args": [
+                "-c",
                 "yarn build"
             ],
-            "isBuildCommand": true,
-            "isBackground": false
+            "problemMatcher": [],
+            "group": {
+                "_id": "build",
+                "isDefault": false
+            }
         }
     ]
 }
